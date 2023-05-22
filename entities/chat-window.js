@@ -9,6 +9,7 @@ export class ChatWindow {
   update() { }
 
   draw(ctx) {
+    ctx.fillStyle = '#000000';
     ctx.fillRect(this.transform.x, this.transform.y, document.documentElement.clientWidth, this.height);
   }
 }

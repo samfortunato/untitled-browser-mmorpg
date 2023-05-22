@@ -1,11 +1,9 @@
 import { setupEngine } from './setup.js';
-import { clear } from './draw.js';
-
-import { StartScene } from '../scenes/start.js';
+import { clear, ctx } from './draw.js';
+import { getDeltaTime } from './time.js';
+import { getCurrentScene } from './scene.js';
 
 export class Game {
-  currentScene = new StartScene();
-
   constructor() {
     this.initialize();
   }
@@ -13,20 +11,16 @@ export class Game {
   initialize() {
     setupEngine();
 
-    this.currentScene.initialize();
+    getCurrentScene().initialize();
   }
 
-  update(timeDifference) {
-    this.currentScene.update();
+  update(currentTimeAtStartOfFrame) {
+    getCurrentScene().update(getDeltaTime(currentTimeAtStartOfFrame));
   }
 
-  draw(ctx) {
+  draw() {
     clear();
 
-    this.currentScene.draw(ctx);
-  }
-
-  changeScene(scene) {
-    this.currentScene = scene;
+    getCurrentScene().draw(ctx);
   }
 }

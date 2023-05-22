@@ -15,7 +15,7 @@ export class Entity {
     this.pos.y = y;
   }
 
-  update() { }
+  update(dt) { }
 
   draw(ctx) { }
 

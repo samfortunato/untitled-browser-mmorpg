@@ -48,7 +48,7 @@ export function getMousePos() {
   return {
     x: input.mousePos.x,
     y: input.mousePos.y,
-  }
+  };
 }
 
 export function isMouseClicked() {
@@ -59,10 +59,5 @@ export function getWheelDelta() {
   return {
     x: input.wheelDelta.x,
     y: input.wheelDelta.y,
-  }
-}
-
-export function setWheelDelta(x, y) {
-  input.wheelDelta.x = x || 0;
-  input.wheelDelta.y = y || 0;
+  };
 }
