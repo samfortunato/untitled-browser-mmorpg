@@ -3,12 +3,12 @@ import { isKeyPressed } from '../../engine/input.js';
 import { clampToPixel } from '../../utils/math.js';
 
 import { STATES } from './states.js';
-import { CROUCH_SPEED, SPEED } from './constants.js';
+import { CROUCH_SPEED, NORMAL_SPEED } from './constants.js';
 
 export class Player {
   id = Symbol();
   state = STATES.IDLE;
-  speed = SPEED;
+  speed = NORMAL_SPEED;
 
   constructor(x = 0, y = 0) {
     this.x = x;
@@ -21,7 +21,7 @@ export class Player {
       this.speed = CROUCH_SPEED;
     } else {
       this.state = STATES.IDLE;
-      this.speed = SPEED;
+      this.speed = NORMAL_SPEED;
     }
 
     if (isKeyPressed('ArrowUp')) this.y -= clampToPixel(this.speed * dt);
