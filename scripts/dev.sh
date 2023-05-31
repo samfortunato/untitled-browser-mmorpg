@@ -1,5 +1,5 @@
 function dev() {
-  http-server .
+  npx --yes http-server .
 }
 
 dev
