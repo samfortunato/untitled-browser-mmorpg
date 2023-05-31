@@ -9,6 +9,7 @@ export class DebugInfo extends Entity {
 
   draw(ctx) {
     ctx.fillStyle = 'white';
-    ctx.fillText(this.dt, this.pos.x, this.pos.y);
+    ctx.font = '1rem serif';
+    ctx.fillText(this.dt, this.transform.x, this.transform.y);
   }
 }

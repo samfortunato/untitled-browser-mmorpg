@@ -1,15 +1,18 @@
 import { Entity } from './entity.js';
 
-import { Transform } from '../components/transform.js';
+import { Dimensions } from '../components/dimensions.js';
 
-export class ChatWindow {
-  height = 200;
-  transform = new Transform(0, document.documentElement.clientHeight - this.height);
+export class ChatWindow extends Entity {
+  dimensions = new Dimensions(0, 200);
 
-  update() { }
+  constructor() {
+    super();
+
+    this.transform.y = document.documentElement.clientHeight - this.dimensions.height;
+  }
 
   draw(ctx) {
     ctx.fillStyle = '#000000';
-    ctx.fillRect(this.transform.x, this.transform.y, document.documentElement.clientWidth, this.height);
+    ctx.fillRect(this.transform.x, this.transform.y, document.documentElement.clientWidth, this.dimensions.height);
   }
 }

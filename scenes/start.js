@@ -7,7 +7,7 @@ import { DebugInfo } from '../entities/debug-info.js';
 import { Player } from '../entities/player/player.js';
 import { ChatWindow } from '../entities/chat-window.js';
 import { Scrollable } from '../sandbox/scrollable.js';
-import { TextWindow } from '../entities/text-window.js';
+import { TextWindow } from '../entities/text-window/text-window.js';
 import { Clickable } from '../sandbox/clickable.js';
 
 export class StartScene extends Scene {
@@ -18,7 +18,7 @@ export class StartScene extends Scene {
       new Clickable(500, 500),
       new TextWindow('hello, this is a text box.', 20, 20, 300, 200),
       new ChatWindow(),
-      new DebugInfo(0, 0),
+      new DebugInfo(16, 16),
     ]);
   }
 }
