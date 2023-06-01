@@ -26,9 +26,14 @@ export class TextWindow extends Entity {
   }
 
   update() {
+    const closeButtonPos = {
+      ...this.closeButton.transform,
+      ...this.closeButton.collider,
+    };
+
     if (
       isKeyPressed('Enter') ||
-      isMouseClicked() && isWithinBoundsOf(getMousePos(), this.closeButton.transform)
+      isMouseClicked() && isWithinBoundsOf(getMousePos(), closeButtonPos)
     ) {
       destroyEntity(this);
     }
