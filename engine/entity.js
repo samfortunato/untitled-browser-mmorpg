@@ -10,6 +10,11 @@ export function addEntities(entities) {
   }
 }
 
+/**
+ * @deprecated
+ *
+ * For Entities, use the `destroy` method on the `Entity` parent class instead.
+ * */
 export function destroyEntity(entity) {
   allEntities.delete(entity.uniqueId.id);
 }
