@@ -1,5 +1,4 @@
 import { getMousePos, isMouseClicked } from '../engine/input.js';
-import { destroyEntity } from '../engine/entity.js';
 
 import { Entity } from './entity.js';
 
@@ -10,10 +9,6 @@ import { isWithinBoundsOf } from '../utils/collision.js';
 export class Clickable extends Entity {
   collider = new Collider(0, 32, 32, 32);
 
-  constructor(...params) {
-    super(...params);
-  }
-
   update() {
     const clickablePos = {
       ...this.transform,
@@ -21,7 +16,7 @@ export class Clickable extends Entity {
     };
 
     if (isMouseClicked() && isWithinBoundsOf(getMousePos(), clickablePos)) {
-      destroyEntity(this);
+      this.destroy();
     }
   }
 
