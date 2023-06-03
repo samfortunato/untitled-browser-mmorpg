@@ -1,4 +1,4 @@
-import { destroyEntity } from '../engine/entity.js';
+import { _destroyEntity } from '../engine/entity.js';
 
 import { UniqueId } from '../components/unique-id.js';
 import { Transform } from '../components/transform.js';
@@ -17,6 +17,6 @@ export class Entity {
   draw(ctx) { }
 
   destroy() {
-    destroyEntity(this);
+    _destroyEntity(this);
   }
 }
