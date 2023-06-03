@@ -51,6 +51,7 @@ export class AreaInfo extends Entity {
     ctx.lineTo(document.documentElement.clientWidth - this.margin, this.transform.y + this.underlineOffset);
     ctx.strokeStyle = 'white';
     ctx.stroke();
+    ctx.closePath();
 
     ctx.globalAlpha = 1;
 
