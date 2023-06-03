@@ -1,5 +1,4 @@
-import { getMousePos, isKeyPressed, isMouseClicked } from '../../engine/input.js';
-import { destroyEntity } from '../../engine/entity.js';
+import { getMouseBounds, isKeyPressed, isMouseClicked } from '../../engine/input.js';
 
 import { Entity } from '../entity.js';
 import { CloseButton } from './close-button.js';
@@ -33,9 +32,9 @@ export class TextWindow extends Entity {
 
     if (
       isKeyPressed('Enter') ||
-      isMouseClicked() && isWithinBoundsOf(getMousePos(), closeButtonPos)
+      isMouseClicked() && isWithinBoundsOf(getMouseBounds(), closeButtonPos)
     ) {
-      destroyEntity(this);
+      this.destroy();
     }
   }
 

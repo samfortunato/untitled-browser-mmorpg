@@ -1,6 +1,14 @@
 import { canvas } from './draw.js';
 
-export const input = {
+import { Collider } from '../components/collider.js';
+
+const mouseCollider = new Collider(0, 0, 0, 0);
+
+const inputMeta = {
+  canMove: true,
+};
+
+const input = {
   pressedKeys: {},
   mousePos: { x: 0, y: 0 },
   isMouseClicked: false,
@@ -51,6 +59,17 @@ export function getMousePos() {
   };
 }
 
+function getMouseCollider() {
+  return { ...mouseCollider };
+}
+
+export function getMouseBounds() {
+  return {
+    ...getMousePos(),
+    ...getMouseCollider(),
+  };
+}
+
 export function isMouseClicked() {
   return input.isMouseClicked;
 }
@@ -60,4 +79,12 @@ export function getWheelDelta() {
     x: input.wheelDelta.x,
     y: input.wheelDelta.y,
   };
+}
+
+export function setCanPlayerMove(canPlayerMove) {
+  inputMeta.canMove = canPlayerMove;
+}
+
+export function getCanPlayerMove() {
+  return inputMeta.canMove;
 }

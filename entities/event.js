@@ -1,4 +1,4 @@
-import { getPlayerPos } from '../engine/meta.js';
+import { getPlayerCollider, getPlayerTransform } from '../engine/meta.js';
 import { addEntity } from '../engine/entity.js';
 
 import { Entity } from './entity.js';
@@ -16,15 +16,23 @@ export class EventTrigger extends Entity {
   cooldown = 0;
 
   update() {
-    const eventPos = {
-      ...this.transform,
-      ...this.collider,
-    };
 
-    if (isWithinBoundsOf(getPlayerPos(), eventPos) && this.cooldown === 0) {
-      addEntity(new AreaInfo());
+    if (this.cooldown === 0) {
+      const playerPos = {
+        ...getPlayerTransform(),
+        ...getPlayerCollider(),
+      };
 
-      this.cooldown++;
+      const eventPos = {
+        ...this.transform,
+        ...this.collider,
+      };
+
+      if (isWithinBoundsOf(playerPos, eventPos)) {
+        addEntity(new AreaInfo());
+
+        this.cooldown++;
+      }
     }
 
     if (this.cooldown > 0) this.cooldown++;

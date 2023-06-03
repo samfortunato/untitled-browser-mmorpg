@@ -1,8 +1,10 @@
-import { isKeyPressed } from '../../engine/input.js';
-import { setPlayerPos } from '../../engine/meta.js';
+import { getCanPlayerMove, isKeyPressed } from '../../engine/input.js';
+import { setPlayerCollider, setPlayerTransform } from '../../engine/meta.js';
 import { GRAVITY } from '../../engine/physics.js';
 
 import { Entity } from '../entity.js';
+
+import { Collider } from '../../components/collider.js';
 
 import { clampToPixel } from '../../utils/math.js';
 
@@ -10,6 +12,8 @@ import { STATES } from './states.js';
 import { CROUCH_SPEED, NORMAL_SPEED } from './constants.js';
 
 export class Player extends Entity {
+  collider = new Collider(0, 32, 32, 32);
+
   state = STATES.IDLE;
   speed = NORMAL_SPEED;
   zVelocity = 0;
@@ -24,28 +28,31 @@ export class Player extends Entity {
   update(dt) {
     if (this.transform.z === 0) this.state = STATES.IDLE;
 
-    if (isKeyPressed('Shift')) {
-      this.state = STATES.CROUCHING;
-      this.speed = CROUCH_SPEED;
-    } else {
-      this.state = STATES.IDLE;
-      this.speed = NORMAL_SPEED;
+    if (getCanPlayerMove()) {
+      if (isKeyPressed('Shift')) {
+        this.state = STATES.CROUCHING;
+        this.speed = CROUCH_SPEED;
+      } else {
+        this.state = STATES.IDLE;
+        this.speed = NORMAL_SPEED;
+      }
+
+      if (isKeyPressed(' ')) {
+        this.state = STATES.JUMPING;
+        this.transform.z += 3;
+      }
+
+      this.transform.z -= GRAVITY;
+      if (this.transform.z < 0) this.transform.z = 0;
+
+      if (isKeyPressed('ArrowUp')) this.transform.y -= clampToPixel(this.speed * dt);
+      if (isKeyPressed('ArrowRight')) this.transform.x += clampToPixel(this.speed * dt);
+      if (isKeyPressed('ArrowDown')) this.transform.y += clampToPixel(this.speed * dt);
+      if (isKeyPressed('ArrowLeft')) this.transform.x -= clampToPixel(this.speed * dt);
     }
 
-    if (isKeyPressed(' ')) {
-      this.state = STATES.JUMPING;
-      this.transform.z += 3;
-    }
-
-    this.transform.z -= GRAVITY;
-    if (this.transform.z < 0) this.transform.z = 0;
-
-    if (isKeyPressed('ArrowUp')) this.transform.y -= clampToPixel(this.speed * dt);
-    if (isKeyPressed('ArrowRight')) this.transform.x += clampToPixel(this.speed * dt);
-    if (isKeyPressed('ArrowDown')) this.transform.y += clampToPixel(this.speed * dt);
-    if (isKeyPressed('ArrowLeft')) this.transform.x -= clampToPixel(this.speed * dt);
-
-    setPlayerPos(this.transform);
+    setPlayerTransform(this.transform);
+    setPlayerCollider(this.collider);
   }
 
   /** @param {CanvasRenderingContext2D} ctx */
