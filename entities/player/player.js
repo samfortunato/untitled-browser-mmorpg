@@ -29,6 +29,7 @@ export class Player extends Entity {
     if (this.transform.z === 0) this.state = STATES.IDLE;
 
     if (getCanPlayerMove()) {
+      // controllable movement
       if (isKeyPressed('Shift')) {
         this.state = STATES.CROUCHING;
         this.speed = CROUCH_SPEED;
@@ -42,14 +43,15 @@ export class Player extends Entity {
         this.transform.z += 3;
       }
 
-      this.transform.z -= GRAVITY;
-      if (this.transform.z < 0) this.transform.z = 0;
-
       if (isKeyPressed('ArrowUp')) this.transform.y -= clampToPixel(this.speed * dt);
       if (isKeyPressed('ArrowRight')) this.transform.x += clampToPixel(this.speed * dt);
       if (isKeyPressed('ArrowDown')) this.transform.y += clampToPixel(this.speed * dt);
       if (isKeyPressed('ArrowLeft')) this.transform.x -= clampToPixel(this.speed * dt);
     }
+
+    // movement resolution
+    this.transform.z -= GRAVITY;
+    if (this.transform.z < 0) this.transform.z = 0;
 
     setPlayerTransform(this.transform);
     setPlayerCollider(this.collider);
