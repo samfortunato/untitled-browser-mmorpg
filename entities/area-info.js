@@ -6,6 +6,7 @@ export class AreaInfo extends Entity {
   animationFrame = 0;
   keyframe = 0;
   opacity = 0;
+  dt = 0;
 
   constructor() {
     super();
@@ -14,7 +15,9 @@ export class AreaInfo extends Entity {
     this.transform.y = document.documentElement.clientHeight - 256;
   }
 
-  update() {
+  update(dt) {
+    this.dt = dt;
+
     if (this.keyframe === 2) {
       this.destroy();
     }
