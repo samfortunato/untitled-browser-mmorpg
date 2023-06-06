@@ -1,5 +1,7 @@
 export const STATES = {
   IDLE: 0,
-  CROUCHING: 1,
-  JUMPING: 2,
+  WALKING: 1,
+  RUNNING: 2,
+  CROUCHING: 3,
+  JUMPING: 4,
 };
