@@ -11,14 +11,21 @@ const inputMeta = {
 const input = {
   pressedKeys: {},
   mousePos: { x: 0, y: 0 },
+  mouseDelta: { x: 0, y: 0 },
   isMouseClicked: false,
+  isMouseDragging: false,
   wheelDelta: { x: 0, y: 0 },
 };
 
 export function setupInput() {
   document.addEventListener('mousemove', (evt) => {
+    input.isMouseDragging = input.isMouseClicked;
+
     input.mousePos.x = evt.x;
     input.mousePos.y = evt.y;
+
+    input.mouseDelta.x = evt.movementX;
+    input.mouseDelta.y = evt.movementY;
   });
 
   document.addEventListener('mousedown', () => input.isMouseClicked = true);
@@ -29,7 +36,9 @@ export function setupInput() {
       evt.key === 'ArrowUp' ||
       evt.key === 'ArrowRight' ||
       evt.key === 'ArrowDown' ||
-      evt.key === 'ArrowLeft'
+      evt.key === 'ArrowLeft' ||
+      evt.key === 'Meta' ||
+      evt.key === 'Control'
     ) {
       evt.preventDefault();
     }
@@ -46,6 +55,10 @@ export function setupInput() {
 
     setTimeout(() => input.wheelDelta.y = 0, 50);
   });
+
+  window.addEventListener('gamepadconnected', () => {
+    console.log('gamepad connected');
+  });
 }
 
 export function isKeyPressed(key) {
@@ -56,6 +69,13 @@ export function getMousePos() {
   return {
     x: input.mousePos.x,
     y: input.mousePos.y,
+  };
+}
+
+export function getMouseMovementDelta() {
+  return {
+    x: input.mouseDelta.x,
+    y: input.mouseDelta.y,
   };
 }
 
@@ -72,6 +92,10 @@ export function getMouseBounds() {
 
 export function isMouseClicked() {
   return input.isMouseClicked;
+}
+
+export function isMouseDragging() {
+  return input.isMouseDragging;
 }
 
 export function getWheelDelta() {
