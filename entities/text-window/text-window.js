@@ -1,7 +1,8 @@
-import { getMouseBounds, isKeyPressed, isMouseClicked } from '../../engine/input.js';
+import { getMouseBounds, getMouseMovementDelta, isKeyPressed, isMouseClicked, isMouseDragging } from '../../engine/input.js';
 
 import { Entity } from '../entity.js';
 import { CloseButton } from './close-button.js';
+import { WindowBar } from './window-bar.js';
 
 import { Dimensions } from '../../components/dimensions.js';
 
@@ -12,41 +13,75 @@ import { TEXT_OFFSET } from './constants.js';
 export class TextWindow extends Entity {
   dimensions = new Dimensions();
 
+  windowBarIsClicked = false;
+
   constructor(text, x = 0, y = 0, width = 100, height = 100) {
     super();
 
     this.text = text;
-    this.transform.x = x;
-    this.transform.y = y;
+    this.transform.x = x || (document.documentElement.clientWidth / 2) - (width / 2);
+    this.transform.y = y || (document.documentElement.clientHeight / 2) - (height / 2);
     this.dimensions.width = width;
     this.dimensions.height = height;
 
-    this.closeButton = new CloseButton(this.transform.x + this.dimensions.width, this.transform.y);
+    this.closeButton = new CloseButton(this.transform, this.dimensions);
+    this.windowBar = new WindowBar(this.transform, this.dimensions);
   }
 
   update() {
-    const closeButtonPos = {
-      ...this.closeButton.transform,
-      ...this.closeButton.collider,
-    };
+    this.transform.x = (document.documentElement.clientWidth / 2) - (this.dimensions.width / 2);
+    this.transform.y = (document.documentElement.clientHeight / 2) - (this.dimensions.height / 2);
+    this.windowBar.setPosition(this.transform);
+    this.closeButton.setPosition(this.transform, this.dimensions);
 
-    if (
-      isKeyPressed('Enter') ||
-      isMouseClicked() && isWithinBoundsOf(getMouseBounds(), closeButtonPos)
-    ) {
-      this.destroy();
+    if (isKeyPressed('Enter') || isMouseClicked()) {
+      const closeButtonPos = {
+        ...this.closeButton.transform,
+        ...this.closeButton.collider,
+      };
+
+      const windowBarPos = {
+        ...this.windowBar.transform,
+        ...this.windowBar.collider,
+      };
+
+      // window dragging functionality
+      // might not use. revisit later
+      // if (isMouseDragging() && isWithinBoundsOf(getMouseBounds(), windowBarPos)) {
+      //   this.transform.translate(getMouseMovementDelta().x, getMouseMovementDelta().y);
+
+      //   this.closeButton.transform.translate(getMouseMovementDelta().x, getMouseMovementDelta().y);
+      //   this.windowBar.transform.translate(getMouseMovementDelta().x, getMouseMovementDelta().y);
+      // }
+
+      if (isWithinBoundsOf(getMouseBounds(), closeButtonPos)) {
+        this.destroy();
+      }
     }
   }
 
+  /** @param {CanvasRenderingContext2D} ctx */
   draw(ctx) {
+    // window shadow
+    ctx.fillStyle = 'orange';
+    ctx.globalAlpha = 0.5;
+    ctx.fillRect(this.transform.x + 10, this.transform.y + 10, this.dimensions.width, this.dimensions.height);
+    ctx.globalAlpha = 1;
+    // ctx.strokeStyle = 'black';
+    // ctx.lineWidth = 0.5;
+    // ctx.strokeRect(this.transform.x + 12, this.transform.y + 12, this.dimensions.width, this.dimensions.height);
+
+    // window bg
     ctx.fillStyle = '#000000';
     ctx.fillRect(this.transform.x, this.transform.y, this.dimensions.width, this.dimensions.height);
 
+    // window text
     ctx.font = '16px Helvetica';
     ctx.textBaseline = 'top';
     ctx.fillStyle = '#ffffff';
-    ctx.fillText(this.text, this.transform.x + TEXT_OFFSET, this.transform.y + TEXT_OFFSET, this.dimensions.width);
+    ctx.fillText(this.text, this.transform.x + TEXT_OFFSET.x, this.transform.y + TEXT_OFFSET.y, this.dimensions.width);
 
     this.closeButton.draw(ctx);
+    // this.windowBar.draw(ctx);
   }
 }
