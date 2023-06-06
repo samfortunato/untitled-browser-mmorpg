@@ -5,4 +5,18 @@ export class Collider {
     this.bottomRight = bottomRight;
     this.bottomLeft = bottomLeft;
   }
+
+  getDimensions() {
+    return {
+      w: this.topRight,
+      h: this.bottomRight,
+    };
+  }
+
+
+  /** For debug. */
+  _draw(ctx, x, y) {
+    ctx.strokeStyle = 'red';
+    ctx.strokeRect(x, y, this.getDimensions().w, this.getDimensions().h);
+  }
 }
