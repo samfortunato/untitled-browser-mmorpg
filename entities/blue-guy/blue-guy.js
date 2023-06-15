@@ -68,8 +68,6 @@ export class BlueGuy extends Entity {
   }
 
   onClose() {
-    console.log('onClose');
-
     this.interactionCooldown = 30;
     this.isInteracting = false;
   }

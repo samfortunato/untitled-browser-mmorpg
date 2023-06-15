@@ -11,6 +11,8 @@ import { TextWindow } from '../entities/text-window/text-window.js';
 import { Clickable } from '../entities/clickable.js';
 import { AreaInfo } from '../entities/area-info.js';
 import { EventTrigger } from '../entities/event.js';
+import { Truck } from '../entities/truck.js';
+import { BlueGuy } from '../entities/blue-guy/blue-guy.js';
 
 export class StartScene extends Scene {
   initialize() {
@@ -18,6 +20,8 @@ export class StartScene extends Scene {
       new Scrollable(),
       new Clickable(500, 500),
       new EventTrigger(300, 300),
+      new Truck(),
+      new BlueGuy(),
       new Player(400, 400),
       new TextWindow('hello, this is a text box.', 0, 0, 300, 200),
       new ChatWindow(),
