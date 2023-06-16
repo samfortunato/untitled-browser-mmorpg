@@ -56,7 +56,7 @@ export class ChatWindow extends Entity {
 
     if (this.isFocused && isKeyPressed('Enter')) {
       const newChat = document.createElement('li');
-      newChat.textContent = `Collider: ${this.inputField.value}`;
+      newChat.textContent = `Hero: ${this.inputField.value}`;
       this.chatLog.append(newChat);
 
       this.inputField.value = PLACEHOLDER_TEXT;
