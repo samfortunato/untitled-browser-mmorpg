@@ -1,6 +1,6 @@
 import { Sprite } from '../../components/sprite.js';
 
-import { DIRECTIONS } from './constants.js';
+import { DIRECTIONS } from '../../constants/directions.js';
 import { STATES } from './states.js';
 
 export class PlayerSprite extends Sprite {

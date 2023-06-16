@@ -13,6 +13,7 @@ import { AreaInfo } from '../entities/area-info.js';
 import { EventTrigger } from '../entities/event.js';
 import { Truck } from '../entities/truck.js';
 import { BlueGuy } from '../entities/blue-guy/blue-guy.js';
+import { Bee } from '../entities/bee/bee.js';
 
 export class StartScene extends Scene {
   initialize() {
@@ -23,6 +24,7 @@ export class StartScene extends Scene {
       new Truck(),
       new BlueGuy(),
       new Player(400, 400),
+      new Bee(400, 450),
       new TextWindow('hello, this is a text box.', 0, 0, 300, 200),
       new ChatWindow(),
       new AreaInfo(),

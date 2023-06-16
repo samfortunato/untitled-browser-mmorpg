@@ -10,7 +10,8 @@ import { clampToPixel } from '../../utils/math.js';
 
 import { PlayerSprite } from './sprite.js';
 import { STATES } from './states.js';
-import { CROUCH_SPEED, DIRECTIONS, NORMAL_SPEED, RUN_SPEED } from './constants.js';
+import { CROUCH_SPEED, NORMAL_SPEED, RUN_SPEED } from './constants.js';
+import { DIRECTIONS } from '../../constants/directions.js';
 
 export class Player extends Entity {
   collider = new Collider(0, 32, 32, 32);
