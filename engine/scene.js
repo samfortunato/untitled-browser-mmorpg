@@ -9,3 +9,7 @@ export function getCurrentScene() {
 export function setCurrentScene(scene) {
   currentScene = scene;
 }
+
+export function getCurrentSceneMap() {
+  return currentScene.getMap();
+}

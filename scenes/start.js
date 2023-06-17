@@ -4,6 +4,8 @@ import { Scene } from './scene.js';
 
 import { DebugInfo } from '../entities/debug-info.js';
 
+import { StartMap } from '../maps/start.js';
+
 import { Player } from '../entities/player/player.js';
 import { ChatWindow } from '../entities/chat-window/chat-window.js';
 import { Scrollable } from '../entities/scrollable.js';
@@ -16,6 +18,8 @@ import { BlueGuy } from '../entities/blue-guy/blue-guy.js';
 import { Bee } from '../entities/bee/bee.js';
 
 export class StartScene extends Scene {
+  map = StartMap;
+
   initialize() {
     addEntities([
       new Scrollable(),

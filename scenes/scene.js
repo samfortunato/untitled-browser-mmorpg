@@ -1,6 +1,14 @@
 import { allEntities } from '../engine/entity.js';
 
+import { GameMap } from '../maps/game-map.js';
+
 export class Scene {
+  map = GameMap;
+
+  getMap() {
+    return this.map;
+  }
+
   initialize() { }
 
   update(dt) {
@@ -10,6 +18,8 @@ export class Scene {
   }
 
   draw(ctx) {
+    this.map.draw(ctx);
+
     for (const entity of allEntities.values()) {
       entity.draw(ctx);
     }
