@@ -16,5 +16,5 @@ export function getDeltaTime() {
 }
 
 export function getFps() {
-  return 1 / deltaTime;
+  return Math.floor(1 / deltaTime);
 }
