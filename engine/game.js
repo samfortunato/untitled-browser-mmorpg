@@ -1,5 +1,5 @@
 import { setupEngine } from './setup.js';
-import { clear, ctx } from './draw.js';
+import { initializeScreen, ctx } from './draw.js';
 import { calculateDeltaTime, getDeltaTime } from './time.js';
 import { getCurrentScene } from './scene.js';
 
@@ -21,7 +21,7 @@ export class Game {
   }
 
   draw() {
-    clear();
+    initializeScreen();
 
     getCurrentScene().draw(ctx);
   }

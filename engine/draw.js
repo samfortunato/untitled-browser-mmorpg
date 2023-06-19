@@ -12,10 +12,10 @@ document.body.append(canvas);
 
 export const ctx = canvas.getContext('2d');
 
-
-export function clear() {
+export function initializeScreen() {
   ctx.imageSmoothingEnabled = false;
   ctx?.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = 'grey';
   ctx?.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.textBaseline = 'top';
 }
