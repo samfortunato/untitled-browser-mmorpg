@@ -15,6 +15,7 @@ const input = {
   isMouseClicked: false,
   isMouseDragging: false,
   wheelDelta: { x: 0, y: 0 },
+  hasInteracted: false,
 };
 
 export function setupInput() {
@@ -28,10 +29,16 @@ export function setupInput() {
     input.mouseDelta.y = evt.movementY;
   });
 
-  document.addEventListener('mousedown', () => input.isMouseClicked = true);
+  document.addEventListener('mousedown', () => {
+    if (!input.hasInteracted) input.hasInteracted = true;
+    input.isMouseClicked = true;
+  });
+
   document.addEventListener('mouseup', () => input.isMouseClicked = false);
 
   document.addEventListener('keydown', (evt) => {
+    if (!input.hasInteracted) input.hasInteracted = true;
+
     if (
       evt.key === 'ArrowUp' ||
       evt.key === 'ArrowRight' ||
@@ -62,7 +69,11 @@ export function setupInput() {
 }
 
 export function isKeyPressed(key) {
-  return input.pressedKeys[key];
+  return input.pressedKeys[key] === true;
+}
+
+export function areKeysPressed(...keys) {
+  return keys.some(key => input.pressedKeys[key] === true);
 }
 
 export function getMousePos() {
@@ -111,4 +122,8 @@ export function setCanPlayerMove(canPlayerMove) {
 
 export function getCanPlayerMove() {
   return inputMeta.canMove;
+}
+
+export function getHasInteracted() {
+  return input.hasInteracted;
 }
