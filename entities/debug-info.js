@@ -13,7 +13,7 @@ export class DebugInfo extends Entity {
 
   draw(ctx) {
     ctx.fillStyle = 'white';
-    ctx.font = '1rem serif';
+    ctx.font = '1rem sans-serif';
     ctx.fillText(this.dt, this.transform.x, this.transform.y);
     ctx.fillText(`${this.fps} FPS`, this.transform.x, this.transform.y + 20);
   }

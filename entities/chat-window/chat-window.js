@@ -16,7 +16,7 @@ export class ChatWindow extends Entity {
   inputXOffset = 16;
   inputYOffset = 12;
   inputFocusLineOffset = 40;
-  chatLogOffset = { x: 16, y: 64 };
+  chatLogOffset = { x: 16, y: 58 };
 
   constructor() {
     super();
@@ -75,14 +75,12 @@ export class ChatWindow extends Entity {
     ctx.font = '16px sans-serif';
     ctx.fillText(this.inputField.value, this.transform.x + this.inputXOffset, this.transform.y + this.inputYOffset);
 
-    if (this.isFocused) {
-      ctx.beginPath();
-      ctx.moveTo(this.transform.x, this.transform.y + this.inputFocusLineOffset);
-      ctx.lineTo(document.documentElement.clientWidth, this.transform.y + this.inputFocusLineOffset);
-      ctx.strokeStyle = 'white';
-      ctx.stroke();
-      ctx.closePath();
-    }
+    ctx.beginPath();
+    ctx.moveTo(this.transform.x, this.transform.y + this.inputFocusLineOffset);
+    ctx.lineTo(document.documentElement.clientWidth, this.transform.y + this.inputFocusLineOffset);
+    ctx.strokeStyle = this.isFocused ? '#aaa' : '#444';
+    ctx.stroke();
+    ctx.closePath();
 
     ctx.fillStyle = 'white';
     for (let i = 0; i < this.chatLog.childNodes.length; i++) {

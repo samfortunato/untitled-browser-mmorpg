@@ -12,7 +12,7 @@ export class AreaInfo extends Entity {
     super();
 
     this.transform.x = this.margin;
-    this.transform.y = document.documentElement.clientHeight - 256;
+    this.transform.y = document.documentElement.clientHeight - 296;
   }
 
   update(dt) {

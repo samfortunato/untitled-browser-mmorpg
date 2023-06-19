@@ -13,12 +13,12 @@ export class CloseButton extends Entity {
   }
 
   draw(ctx) {
-    ctx.font = '32px sans-serif';
+    ctx.font = '24px sans-serif';
     ctx.textBaseline = 'top';
     ctx.fillStyle = 'white';
-    ctx.fillText('x', this.transform.x + 8, this.transform.y - 1);
+    ctx.fillText('x', this.transform.x + 10, this.transform.y + 3);
 
-    // this.collider._draw(ctx, this.transform.x, this.transform.y);
+    // this.collider._draw(cstx, this.transform.x, this.transform.y);
   }
 
   setPosition(transform, dimensions) {

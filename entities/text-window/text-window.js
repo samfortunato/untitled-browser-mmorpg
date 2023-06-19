@@ -13,6 +13,7 @@ import { TEXT_OFFSET } from './constants.js';
 export class TextWindow extends Entity {
   dimensions = new Dimensions();
 
+  textWindowOffset = { x: 0, y: -60 };
   windowBarIsClicked = false;
 
   constructor(text, x = 0, y = 0, width = 100, height = 100) {
@@ -20,7 +21,7 @@ export class TextWindow extends Entity {
 
     this.text = text;
     this.transform.x = x || (document.documentElement.clientWidth / 2) - (width / 2);
-    this.transform.y = y || (document.documentElement.clientHeight / 2) - (height / 2);
+    this.transform.y = y || (document.documentElement.clientHeight / 2) - (height / 2) + this.textWindowOffset.y;
     this.dimensions.width = width;
     this.dimensions.height = height;
 
@@ -30,7 +31,7 @@ export class TextWindow extends Entity {
 
   update() {
     this.transform.x = (document.documentElement.clientWidth / 2) - (this.dimensions.width / 2);
-    this.transform.y = (document.documentElement.clientHeight / 2) - (this.dimensions.height / 2);
+    this.transform.y = (document.documentElement.clientHeight / 2) - (this.dimensions.height / 2) + this.textWindowOffset.y;
     this.windowBar.setPosition(this.transform);
     this.closeButton.setPosition(this.transform, this.dimensions);
 
@@ -63,7 +64,7 @@ export class TextWindow extends Entity {
   /** @param {CanvasRenderingContext2D} ctx */
   draw(ctx) {
     // window shadow
-    ctx.fillStyle = 'orange';
+    ctx.fillStyle = '#444444';
     ctx.globalAlpha = 0.5;
     ctx.fillRect(this.transform.x + 10, this.transform.y + 10, this.dimensions.width, this.dimensions.height);
     ctx.globalAlpha = 1;
