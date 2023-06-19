@@ -1,10 +1,11 @@
-import { getCanPlayerMove, isKeyPressed } from '../../engine/input.js';
+import { areKeysPressed, getCanPlayerMove, isKeyPressed } from '../../engine/input.js';
 import { setPlayerCollider, setPlayerTransform } from '../../engine/meta.js';
 import { GRAVITY } from '../../engine/physics.js';
 
 import { Entity } from '../entity.js';
 
 import { Collider } from '../../components/collider.js';
+import { AudioEmitter } from '../../components/audio-emitter.js';
 
 import { clampToPixel } from '../../utils/math.js';
 
@@ -15,6 +16,8 @@ import { DIRECTIONS } from '../../constants/directions.js';
 
 export class Player extends Entity {
   collider = new Collider(0, 32, 32, 32);
+  walkingAudioEmitter = new AudioEmitter('walking', 0.03);
+  runningAudioEmitter = new AudioEmitter('running', 0.03);
   sprite = new PlayerSprite();
 
   state = STATES.IDLE;
@@ -22,90 +25,53 @@ export class Player extends Entity {
   speed = NORMAL_SPEED;
   zVelocity = 0;
 
-  constructor(x = 0, y = 0) {
-    super();
-
-    this.transform.x = x;
-    this.transform.y = y;
-  }
-
   update(dt) {
     if (this.transform.z === 0) this.state = STATES.IDLE;
 
     if (getCanPlayerMove()) {
-      // state change
-      if (isKeyPressed('Meta')) this.state = STATES.CROUCHING;
-      if (isKeyPressed('Control')) this.state = STATES.CROUCHING;
-      if (
-        !isKeyPressed('Shift') &&
-        (
-          isKeyPressed('ArrowUp') ||
-          isKeyPressed('ArrowRight') ||
-          isKeyPressed('ArrowDown') ||
-          isKeyPressed('ArrowLeft')
-        )
-      ) {
-        this.state = STATES.WALKING;
-      }
-      if (
-        isKeyPressed('Shift') &&
-        (
-          isKeyPressed('ArrowUp') ||
-          isKeyPressed('ArrowRight') ||
-          isKeyPressed('ArrowDown') ||
-          isKeyPressed('ArrowLeft')
-        )
-      ) {
-        this.state = STATES.RUNNING;
-      }
-      if (isKeyPressed(' ')) this.state = STATES.JUMPING;
+      const isPressingCrouchKey = areKeysPressed('Meta', 'Control');
+      const isPressingRunKey = isKeyPressed('Shift');
+      const isPressingMovementKey = areKeysPressed('ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft', 'w', 'a', 's', 'd');
+      const isPressingMovementUpKey = areKeysPressed('ArrowUp', 'w');
+      const isPressingMovementRightKey = areKeysPressed('ArrowRight', 'd');
+      const isPressingMovementDownKey = areKeysPressed('ArrowDown', 's');
+      const isPressingMovementLeftKey = areKeysPressed('ArrowLeft', 'a');
+      const isPressingJumpKey = isKeyPressed(' ');
 
-      if (
-        !isKeyPressed('Meta') &&
-        !isKeyPressed('Control') &&
-        !isKeyPressed('ArrowUp') &&
-        !isKeyPressed('ArrowRight') &&
-        !isKeyPressed('ArrowDown') &&
-        !isKeyPressed('ArrowLeft') &&
-        !isKeyPressed('Shift') &&
-        !isKeyPressed(' ')
-      ) {
+      // state change
+      if (isPressingCrouchKey) this.state = STATES.CROUCHING;
+      if (!isPressingRunKey && isPressingMovementKey) this.state = STATES.WALKING;
+      if (isPressingRunKey && isPressingMovementKey) this.state = STATES.RUNNING;
+      if (isPressingJumpKey) this.state = STATES.JUMPING;
+
+      if (!isPressingCrouchKey && !isPressingMovementKey && !isPressingCrouchKey && !isPressingJumpKey) {
         this.state = STATES.IDLE;
       }
 
       // movement
-      if (isKeyPressed('Meta') || isKeyPressed('Control')) {
-        this.speed = CROUCH_SPEED;
-      } else {
-        this.speed = NORMAL_SPEED;
-      }
+      this.speed = isPressingCrouchKey ? CROUCH_SPEED : NORMAL_SPEED;
+      this.speed = isPressingRunKey ? RUN_SPEED : NORMAL_SPEED;
 
-      if (isKeyPressed('Shift')) {
-        this.speed = RUN_SPEED;
-      } else {
-        this.speed = NORMAL_SPEED;
-      }
-
-      if (isKeyPressed(' ')) {
+      if (isPressingJumpKey) {
         this.transform.z += 3;
       }
 
-      if (isKeyPressed('ArrowUp')) {
+      if (isPressingMovementUpKey) {
         this.transform.y -= clampToPixel(this.speed * dt);
         this.direction = DIRECTIONS.UP;
       }
 
-      if (isKeyPressed('ArrowRight')) {
+      if (isPressingMovementRightKey) {
         this.transform.x += clampToPixel(this.speed * dt);
         this.direction = DIRECTIONS.RIGHT;
       }
 
-      if (isKeyPressed('ArrowDown')) {
+      if (isPressingMovementDownKey) {
         this.transform.y += clampToPixel(this.speed * dt);
         this.direction = DIRECTIONS.DOWN;
       }
 
-      if (isKeyPressed('ArrowLeft')) {
+      if (isPressingMovementLeftKey) {
         this.transform.x -= clampToPixel(this.speed * dt);
         this.direction = DIRECTIONS.LEFT;
       }
@@ -118,6 +84,13 @@ export class Player extends Entity {
     // meta, for interactions with the player
     setPlayerTransform(this.transform);
     setPlayerCollider(this.collider);
+
+    // sfx
+    if (this.state === STATES.WALKING) this.walkingAudioEmitter.loop();
+    else this.walkingAudioEmitter.stop();
+
+    if (this.state === STATES.RUNNING) this.runningAudioEmitter.loop();
+    else this.runningAudioEmitter.stop();
   }
 
   /** @param {CanvasRenderingContext2D} ctx */
