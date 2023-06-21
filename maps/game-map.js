@@ -1,5 +1,7 @@
 import { calculateTileCrop, getTileset } from './tiles.js';
 
+import { TILE_SIZE_RAW, TILE_SIZE_RENDERED } from '../constants/draw.js';
+
 export class GameMap {
   static tilesetName = 'NULL';
   static tiles = [[0]];
@@ -11,9 +13,9 @@ export class GameMap {
         ctx.drawImage(
           getTileset(this.tilesetName),
           ...calculateTileCrop(this.tilesetName, this.tiles[y][x]),
-          16, 16,
-          x * 32, y * 32,
-          32, 32
+          TILE_SIZE_RAW, TILE_SIZE_RAW,
+          x * TILE_SIZE_RENDERED, y * TILE_SIZE_RENDERED,
+          TILE_SIZE_RENDERED, TILE_SIZE_RENDERED
         )
       }
     }
