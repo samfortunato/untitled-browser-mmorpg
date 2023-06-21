@@ -45,7 +45,7 @@ export class AreaInfo extends Entity {
 
     ctx.globalAlpha = this.opacity;
 
-    ctx.font = '2rem sans-serif';
+    ctx.font = '500 2rem "Titillium Web"';
     ctx.fillStyle = 'white';
     ctx.fillText('Highland Plains', this.transform.x, this.transform.y);
 
