@@ -14,7 +14,7 @@ export class MenuButton extends Entity {
 
   isClicked = false;
   isHovering = false;
-  textOffset = { x: 5, y: 22 };
+  textOffset = { x: 6, y: 22 };
   backgroundColor = '#222';
 
   constructor(text = '', onClick = noop, x, y) {
@@ -63,7 +63,7 @@ export class MenuButton extends Entity {
     ctx.fill();
     ctx.closePath();
 
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = '#ccc';
     ctx.font = '0.8rem sans-serif';
     ctx.fillText(this.text, this.transform.x + this.textOffset.x, this.transform.y + this.textOffset.y);
 

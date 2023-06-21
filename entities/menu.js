@@ -5,7 +5,11 @@ import { Entity } from './entity.js';
 import { MenuButton } from './menu-button.js';
 import { TextWindow } from './text-window/text-window.js';
 
+import { Dimensions } from '../components/dimensions.js';
+
 export class Menu extends Entity {
+  dimensions = new Dimensions(document.documentElement.clientWidth, 44);
+
   items = [
     new MenuButton('Inventory', this.onInventoryClick),
     new MenuButton('Stats', this.onStatsClick),
@@ -14,15 +18,16 @@ export class Menu extends Entity {
     new MenuButton('Mute', this.onMuteClick),
   ];
 
-  initialButtonOffset = 10;
+  initialButtonOffset = 9;
+  buttonOffset = { x: 0, y: 2 };
   gap = 2;
 
-  constructor(x = 0, y = 625) {
+  constructor(x = 0, y = 622) {
     super(x, y);
 
     this.items.forEach((item, idx) => {
       item.transform.x = this.transform.x + this.initialButtonOffset + (idx * 100) + this.gap + (this.gap * idx);
-      item.transform.y = this.transform.y;
+      item.transform.y = this.transform.y + this.buttonOffset.y;
     });
   }
 
@@ -38,9 +43,8 @@ export class Menu extends Entity {
     ctx.roundRect(
       this.transform.x,
       this.transform.y,
-      // (this.items.length * 100) + (this.items.length * this.gap) - this.gap,
-      document.documentElement.clientWidth,
-      40
+      this.dimensions.width,
+      this.dimensions.height,
     );
     ctx.fill();
     ctx.closePath();
@@ -55,7 +59,12 @@ export class Menu extends Entity {
   }
 
   onStatsClick() {
-    addEntity(new TextWindow('Stats'));
+    const statsWindowText = `Stats:
+    ATK: 2
+    DEF: 3
+    MAG: 3`;
+
+    addEntity(new TextWindow(statsWindowText, null, null, 400));
   }
 
   onGuildClick() {
