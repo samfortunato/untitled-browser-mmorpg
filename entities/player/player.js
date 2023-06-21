@@ -13,6 +13,7 @@ import { PlayerSprite } from './sprite.js';
 import { STATES } from './states.js';
 import { CROUCH_SPEED, NORMAL_SPEED, RUN_SPEED } from './constants.js';
 import { DIRECTIONS } from '../../constants/directions.js';
+import { PlayerName } from './player-name.js';
 
 export class Player extends Entity {
   collider = new Collider(0, 32, 32, 32);
@@ -24,6 +25,7 @@ export class Player extends Entity {
   direction = DIRECTIONS.DOWN;
   speed = NORMAL_SPEED;
   zVelocity = 0;
+  playerName = new PlayerName(this.transform.x, this.transform.y, 'Collider');
 
   update(dt) {
     if (this.transform.z === 0) this.state = STATES.IDLE;
@@ -31,7 +33,7 @@ export class Player extends Entity {
     if (getCanPlayerMove()) {
       const isPressingCrouchKey = areKeysPressed('Meta', 'Control');
       const isPressingRunKey = isKeyPressed('Shift');
-      const isPressingMovementKey = areKeysPressed('ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft', 'w', 'a', 's', 'd');
+      const isPressingMovementKey = areKeysPressed('ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft', 'w', 'a', 's', 'd', 'W', 'A', 'S', 'D');
       const isPressingMovementUpKey = areKeysPressed('ArrowUp', 'w');
       const isPressingMovementRightKey = areKeysPressed('ArrowRight', 'd');
       const isPressingMovementDownKey = areKeysPressed('ArrowDown', 's');
@@ -91,6 +93,9 @@ export class Player extends Entity {
 
     if (this.state === STATES.RUNNING) this.runningAudioEmitter.loop();
     else this.runningAudioEmitter.stop();
+
+    // player name
+    this.playerName.update();
   }
 
   /** @param {CanvasRenderingContext2D} ctx */
@@ -106,6 +111,8 @@ export class Player extends Entity {
       (this.transform.y - this.collider.getDimensions().h - this.transform.z) + crouchOffset,
       48, 64
     );
+
+    this.playerName.draw(ctx);
 
     // this.collider._draw(ctx, this.transform.x, this.transform.y);
 
