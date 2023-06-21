@@ -6,11 +6,24 @@ canvas.height = document.documentElement.clientHeight;
 window.addEventListener('resize', () => {
   canvas.width = document.documentElement.clientWidth;
   canvas.height = document.documentElement.clientHeight;
+
+  calculateCanvasSize();
 })
 
 document.body.append(canvas);
 
 export const ctx = canvas.getContext('2d');
+
+calculateCanvasSize();
+
+function calculateCanvasSize() {
+  const canvasBoundingClientRect = canvas.getBoundingClientRect();
+  canvas.width = canvasBoundingClientRect.width * devicePixelRatio;
+  canvas.height = canvasBoundingClientRect.height * devicePixelRatio;
+  ctx?.scale(devicePixelRatio, devicePixelRatio);
+  canvas.style.width = `${canvasBoundingClientRect.width}px`;
+  canvas.style.height = `${canvasBoundingClientRect.height}px`;
+}
 
 export function initializeScreen() {
   ctx.imageSmoothingEnabled = false;
