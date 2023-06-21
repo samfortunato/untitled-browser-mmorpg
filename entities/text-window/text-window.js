@@ -1,4 +1,4 @@
-import { getMouseBounds, getMouseMovementDelta, isKeyPressed, isMouseClicked, isMouseDragging } from '../../engine/input.js';
+import { getMouseBounds, getMouseMovementDelta, isKeyPressed, isMouseClicked, isMouseDragging, setCanPlayerMove } from '../../engine/input.js';
 
 import { Entity } from '../entity.js';
 import { CloseButton } from './close-button.js';
@@ -27,6 +27,8 @@ export class TextWindow extends Entity {
 
     this.closeButton = new CloseButton(this.transform, this.dimensions);
     this.windowBar = new WindowBar(this.transform, this.dimensions);
+
+    setCanPlayerMove(false);
   }
 
   update() {
@@ -56,6 +58,8 @@ export class TextWindow extends Entity {
       // }
 
       if (isWithinBoundsOf(getMouseBounds(), closeButtonPos)) {
+        setCanPlayerMove(true);
+
         this.destroy();
       }
     }
@@ -65,19 +69,27 @@ export class TextWindow extends Entity {
   draw(ctx) {
     // window shadow
     ctx.fillStyle = '#444444';
-    ctx.globalAlpha = 0.5;
-    ctx.fillRect(this.transform.x + 10, this.transform.y + 10, this.dimensions.width, this.dimensions.height);
-    ctx.globalAlpha = 1;
+    // ctx.globalAlpha = 0.5;
+    ctx.globalCompositeOperation = 'overlay';
+    ctx.beginPath();
+    ctx.roundRect(this.transform.x + 10, this.transform.y + 10, this.dimensions.width, this.dimensions.height);
+    ctx.fill();
+    ctx.closePath();
+    // ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = 'source-over';
     // ctx.strokeStyle = 'black';
     // ctx.lineWidth = 0.5;
     // ctx.strokeRect(this.transform.x + 12, this.transform.y + 12, this.dimensions.width, this.dimensions.height);
 
     // window bg
     ctx.fillStyle = '#000000';
-    ctx.fillRect(this.transform.x, this.transform.y, this.dimensions.width, this.dimensions.height);
+    ctx.beginPath();
+    ctx.roundRect(this.transform.x, this.transform.y, this.dimensions.width, this.dimensions.height, 2);
+    ctx.fill();
+    ctx.closePath();
 
     // window text
-    ctx.font = '16px Helvetica';
+    ctx.font = '16px Abel Regular';
     ctx.textBaseline = 'top';
     ctx.fillStyle = '#ffffff';
     ctx.fillText(this.text, this.transform.x + TEXT_OFFSET.x, this.transform.y + TEXT_OFFSET.y, this.dimensions.width);
