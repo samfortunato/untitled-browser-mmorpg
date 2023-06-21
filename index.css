@@ -1,3 +1,26 @@
+@font-face {
+  font-family: 'Abel Regular';
+  src: url('./assets/fonts/Abel-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Titillium Web';
+  src: url('./assets/fonts/TitilliumWeb-ExtraLight.ttf');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Titillium Web';
+  src: url('./assets/fonts/TitilliumWeb-Light.ttf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Titillium Web';
+  src: url('./assets/fonts/TitilliumWeb-Regular.ttf');
+  font-weight: 500;
+}
+
 body {
   margin: 0;
   padding: 0;
