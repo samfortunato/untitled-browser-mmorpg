@@ -7,6 +7,13 @@ import { Dimensions } from '../../components/dimensions.js';
 
 import { noop } from '../../utils/noop.js';
 
+const DEFAULT_PORTRAIT_BOUNDS = {
+  dx: document.documentElement.clientWidth - 450,
+  dy: document.documentElement.clientHeight - 595,
+  dw: 400,
+  dh: 400,
+};
+
 export class DialogBox extends Entity {
   dimensions = new Dimensions(0, 200);
 
@@ -15,12 +22,13 @@ export class DialogBox extends Entity {
     y: 32,
   };
 
-  constructor(text, portrait = null, onClose = noop) {
+  constructor(text, portrait = null, onClose = noop, portraitBounds = DEFAULT_PORTRAIT_BOUNDS) {
     super();
 
     this.text = text;
     this.portrait = portrait;
     this.onClose = onClose;
+    this.portraitBounds = portraitBounds;
 
     this.transform.set(0, document.documentElement.clientHeight - this.dimensions.height);
 
@@ -45,17 +53,17 @@ export class DialogBox extends Entity {
     if (this.portrait) {
       ctx.drawImage(
         this.portrait,
-        document.documentElement.clientWidth - 450,
-        document.documentElement.clientHeight - 595,
-        400,
-        400
+        this.portraitBounds.dx || DEFAULT_PORTRAIT_BOUNDS.dx,
+        this.portraitBounds.dy || DEFAULT_PORTRAIT_BOUNDS.dy,
+        this.portraitBounds.dw || DEFAULT_PORTRAIT_BOUNDS.dw,
+        this.portraitBounds.dh || DEFAULT_PORTRAIT_BOUNDS.dh
       );
     }
 
     ctx.fillStyle = 'black';
     ctx.fillRect(this.transform.x, this.transform.y, document.documentElement.clientWidth, this.dimensions.height);
 
-    ctx.font = '24px sans-serif';
+    ctx.font = '24px Abel Regular';
     ctx.fillStyle = 'white';
     ctx.fillText(this.text, this.transform.x + this.textOffset.x, this.transform.y + this.textOffset.y);
   }
