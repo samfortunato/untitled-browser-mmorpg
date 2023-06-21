@@ -1,8 +1,10 @@
-import { isKeyPressed, setCanPlayerMove } from '../../engine/input.js';
+import { areKeysPressed, isKeyPressed, setCanPlayerMove } from '../../engine/input.js';
+import { processCommand } from '../../engine/command.js';
 
 import { Entity } from '../entity.js';
 
 import { Dimensions } from '../../components/dimensions.js';
+import { Offset } from '../../constructs/offset.js';
 
 import { PLACEHOLDER_TEXT } from './constants.js';
 
@@ -13,36 +15,25 @@ export class ChatWindow extends Entity {
   inputField = document.createElement('input');
   chatLog = document.createElement('p');
 
-  inputXOffset = 16;
-  inputYOffset = 12;
+  inputOffset = new Offset(16, 13);
   inputFocusLineOffset = 40;
-  chatLogOffset = { x: 16, y: 58 };
+  chatLogOffset = new Offset(16, 58);
 
   constructor() {
     super();
 
     this.transform.y = document.documentElement.clientHeight - this.dimensions.height;
 
-    this.inputField.style.position = 'fixed';
-    this.inputField.style.bottom = String(-100);
-    this.inputField.style.outline = 'none';
-    this.inputField.value = PLACEHOLDER_TEXT;
-    document.body.append(this.inputField);
-
-    this.chatLog.style.position = 'fixed';
-    this.chatLog.style.bottom = String(-100);
-    this.chatLog.style.outline = 'none';
-    document.body.append(this.chatLog);
+    this.#initializeInputField();
+    this.#initializeChatLog();
   }
 
   update(dt) {
-    if (!this.isFocused && isKeyPressed('t')) {
+    if (!this.isFocused && areKeysPressed('t', 'T')) {
       if (this.inputField.value === PLACEHOLDER_TEXT) this.inputField.value = '';
       this.inputField.focus();
       this.isFocused = true;
       setCanPlayerMove(false);
-
-      console.log('chat is focused');
     }
 
     if (this.isFocused && isKeyPressed('Escape')) {
@@ -50,18 +41,21 @@ export class ChatWindow extends Entity {
       this.inputField.blur();
       this.isFocused = false;
       setCanPlayerMove(true);
-
-      console.log('chat is unfocused');
     }
 
     if (this.isFocused && isKeyPressed('Enter')) {
-      const newChat = document.createElement('li');
-      newChat.textContent = `Collider: ${this.inputField.value}`;
-      this.chatLog.append(newChat);
+      if (this.inputField.value.startsWith('/')) {
+        processCommand(this.inputField.value);
+      } else {
+        const newChat = document.createElement('li');
+        newChat.textContent = `Collider: ${this.inputField.value}`;
+        this.chatLog.append(newChat);
+      }
 
       this.inputField.value = PLACEHOLDER_TEXT;
       this.inputField.blur();
       this.isFocused = false;
+
       setCanPlayerMove(true);
     }
   }
@@ -72,8 +66,8 @@ export class ChatWindow extends Entity {
     ctx.fillRect(this.transform.x, this.transform.y, document.documentElement.clientWidth, this.dimensions.height);
 
     ctx.fillStyle = this.isFocused ? 'white' : 'gray';
-    ctx.font = '16px sans-serif';
-    ctx.fillText(this.inputField.value, this.transform.x + this.inputXOffset, this.transform.y + this.inputYOffset);
+    ctx.font = '16px Abel Regular';
+    ctx.fillText(this.inputField.value, this.transform.x + this.inputOffset.x, this.transform.y + this.inputOffset.y);
 
     ctx.beginPath();
     ctx.moveTo(this.transform.x, this.transform.y + this.inputFocusLineOffset);
@@ -90,5 +84,22 @@ export class ChatWindow extends Entity {
         this.transform.y + this.chatLogOffset.y + i * 20
       );
     }
+  }
+
+  #initializeInputField() {
+    this.inputField.style.position = 'fixed';
+    this.inputField.style.bottom = String(-100);
+    this.inputField.style.outline = 'none';
+    this.inputField.value = PLACEHOLDER_TEXT;
+
+    document.body.append(this.inputField);
+  }
+
+  #initializeChatLog() {
+    this.chatLog.style.position = 'fixed';
+    this.chatLog.style.bottom = String(-100);
+    this.chatLog.style.outline = 'none';
+
+    document.body.append(this.chatLog);
   }
 }
