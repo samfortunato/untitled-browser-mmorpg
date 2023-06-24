@@ -1,5 +1,9 @@
+# Modules
+node_modules/
+
 # Project
 sandbox/
+dist/
 
 # Other
 .DS_Store
