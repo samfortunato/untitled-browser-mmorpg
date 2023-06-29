@@ -1,3 +1,5 @@
+import { Vector3 } from '../constructs/vector3.js';
+
 export class Physics {
-  velocity = { x: 0, y: 0, z: 0 };
+  velocity = new Vector3();
 }

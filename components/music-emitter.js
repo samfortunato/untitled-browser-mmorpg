@@ -2,9 +2,9 @@ import { getIsMuted } from '../engine/audio.js';
 import { getHasInteracted } from '../engine/input.js';
 
 export class MusicEmitter {
-  constructor(audioName, volume = 1) {
-    this.audioElement = document.createElement('audio');
+  audioElement = document.createElement('audio');
 
+  constructor(audioName, volume = 1) {
     this.audioElement.src = `./assets/music/${audioName}.mp3`;
     this.audioElement.volume = volume;
   }
@@ -20,6 +20,7 @@ export class MusicEmitter {
 
   loop() {
     this.audioElement.loop = true;
+
     if (this.audioElement.paused) this.playOnInteraction();
   }
 

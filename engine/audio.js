@@ -1,15 +1,15 @@
-const meta = {
+const settings = {
   isMuted: false,
 };
 
 export function getIsMuted() {
-  return meta.isMuted;
+  return settings.isMuted;
 }
 
 export function setIsMuted(isMuted) {
-  meta.isMuted = isMuted;
+  settings.isMuted = isMuted;
 }
 
 export function toggleMute() {
-  meta.isMuted = !meta.isMuted;
+  settings.isMuted = !settings.isMuted;
 }

@@ -1,0 +1,1 @@
+export const AMOUNT_OF_TILES_ON_EACH_ROW = 10;

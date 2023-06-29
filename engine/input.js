@@ -2,11 +2,30 @@ import { canvas } from './draw.js';
 
 import { Collider } from '../components/collider.js';
 
-const mouseCollider = new Collider(0, 0, 0, 0);
+export const CONTROLS = {
+  CONFIRM_1: 'Enter',
+  CONFIRM_2: 'x',
+  CONFIRM_3: 'X',
+  CANCEL: 'Esc',
+  MOVE_UP_1: 'ArrowUp',
+  MOVE_RIGHT_1: 'ArrowRight',
+  MOVE_DOWN_1: 'ArrowDown',
+  MOVE_LEFT_1: 'ArrowLeft',
+  MOVE_UP_2: 'w',
+  MOVE_RIGHT_2: 'a',
+  MOVE_DOWN_2: 's',
+  MOVE_LEFT_2: 'd',
+  MOVE_UP_3: 'W',
+  MOVE_RIGHT_3: 'A',
+  MOVE_DOWN_3: 'S',
+  MOVE_LEFT_3: 'D',
+  JUMP: ' ',
+  CROUCH_1: 'Meta',
+  CROUCH_2: 'Control',
+  RUN: 'Shift',
+}
 
-const inputMeta = {
-  canMove: true,
-};
+const mouseCollider = new Collider(0, 0, 0, 0);
 
 const input = {
   pressedKeys: {},
@@ -76,6 +95,78 @@ export function areKeysPressed(...keys) {
   return keys.some(key => input.pressedKeys[key] === true);
 }
 
+export function isConfirmKeyPressed() {
+  return (
+    input.pressedKeys[CONTROLS.CONFIRM_1] ||
+    input.pressedKeys[CONTROLS.CONFIRM_2] ||
+    input.pressedKeys[CONTROLS.CONFIRM_3]
+  );
+}
+
+export function isCrouchKeyPressed() {
+  return (
+    input.pressedKeys[CONTROLS.CROUCH_1] ||
+    input.pressedKeys[CONTROLS.CROUCH_2]
+  );
+}
+
+export function isAMovementKeyPressed() {
+  return (
+    input.pressedKeys[CONTROLS.MOVE_UP_1] ||
+    input.pressedKeys[CONTROLS.MOVE_RIGHT_1] ||
+    input.pressedKeys[CONTROLS.MOVE_DOWN_1] ||
+    input.pressedKeys[CONTROLS.MOVE_LEFT_1] ||
+    input.pressedKeys[CONTROLS.MOVE_UP_2] ||
+    input.pressedKeys[CONTROLS.MOVE_RIGHT_2] ||
+    input.pressedKeys[CONTROLS.MOVE_DOWN_2] ||
+    input.pressedKeys[CONTROLS.MOVE_LEFT_2] ||
+    input.pressedKeys[CONTROLS.MOVE_UP_3] ||
+    input.pressedKeys[CONTROLS.MOVE_RIGHT_3] ||
+    input.pressedKeys[CONTROLS.MOVE_DOWN_3] ||
+    input.pressedKeys[CONTROLS.MOVE_LEFT_3]
+  );
+}
+
+export function isRunKeyPressed() {
+  return input.pressedKeys[CONTROLS.RUN];
+}
+
+export function isJumpKeyPressed() {
+  return input.pressedKeys[CONTROLS.JUMP];
+}
+
+export function isMovementUpKeyPressed() {
+  return (
+    input.pressedKeys[CONTROLS.MOVE_UP_1] ||
+    input.pressedKeys[CONTROLS.MOVE_UP_2] ||
+    input.pressedKeys[CONTROLS.MOVE_UP_3]
+  );
+}
+
+export function isMovementRightKeyPressed() {
+  return (
+    input.pressedKeys[CONTROLS.MOVE_RIGHT_1] ||
+    input.pressedKeys[CONTROLS.MOVE_RIGHT_2] ||
+    input.pressedKeys[CONTROLS.MOVE_RIGHT_3]
+  );
+}
+
+export function isMovementDownKeyPressed() {
+  return (
+    input.pressedKeys[CONTROLS.MOVE_DOWN_1] ||
+    input.pressedKeys[CONTROLS.MOVE_DOWN_2] ||
+    input.pressedKeys[CONTROLS.MOVE_DOWN_3]
+  );
+}
+
+export function isMovementLeftKeyPressed() {
+  return (
+    input.pressedKeys[CONTROLS.MOVE_LEFT_1] ||
+    input.pressedKeys[CONTROLS.MOVE_LEFT_2] ||
+    input.pressedKeys[CONTROLS.MOVE_LEFT_3]
+  );
+}
+
 export function getMousePos() {
   return {
     x: input.mousePos.x,
@@ -114,14 +205,6 @@ export function getWheelDelta() {
     x: input.wheelDelta.x,
     y: input.wheelDelta.y,
   };
-}
-
-export function setCanPlayerMove(canPlayerMove) {
-  inputMeta.canMove = canPlayerMove;
-}
-
-export function getCanPlayerMove() {
-  return inputMeta.canMove;
 }
 
 export function getHasInteracted() {

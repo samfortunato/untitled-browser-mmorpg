@@ -4,20 +4,20 @@ import { Scene } from './scene.js';
 
 import { StartMap } from '../maps/start.js';
 
-import { DebugInfo } from '../entities/debug-info.js';
-import { Player } from '../entities/player/player.js';
-import { ChatWindow } from '../entities/chat-window/chat-window.js';
-import { AreaInfo } from '../entities/area-info.js';
-import { EventTrigger } from '../entities/event.js';
-import { Truck } from '../entities/truck.js';
-import { BlueGuy } from '../entities/blue-guy/blue-guy.js';
-import { Electra } from '../entities/electra/electra.js';
-import { Bee } from '../entities/bee/bee.js';
-import { Menu } from '../entities/menu.js';
-import { Pet } from '../entities/pet/pet.js';
+import { Player } from '../entities/meta/player/player.js';
+import { EventTrigger } from '../entities/meta/event.js';
+import { DebugInfo } from '../entities/ui/debug-info.js';
+import { ChatWindow } from '../entities/ui/chat-window/chat-window.js';
+import { AreaInfo } from '../entities/ui/area-info.js';
+import { MapEditor } from '../entities/ui/map-editor/map-editor.js';
+import { Menu } from '../entities/ui/menu.js';
+import { Truck } from '../entities/object/truck.js';
+import { BlueGuy } from '../entities/npc/blue-guy/blue-guy.js';
+import { Electra } from '../entities/npc/electra/electra.js';
+import { Bee } from '../entities/npc/bee/bee.js';
+import { Pet } from '../entities/npc/pet/pet.js';
 
 import { MusicEmitter } from '../components/music-emitter.js';
-import { MapEditor } from '../entities/map-editor/map-editor.js';
 
 export class StartScene extends Scene {
   map = StartMap;

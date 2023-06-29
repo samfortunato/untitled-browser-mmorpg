@@ -1,6 +1,6 @@
 import { addEntity } from './entity.js';
 
-import { MapEditor } from '../entities/map-editor/map-editor.js';
+import { MapEditor } from '../entities/ui/map-editor/map-editor.js';
 
 import { getCurrentSceneMap } from './scene.js';
 

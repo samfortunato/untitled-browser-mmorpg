@@ -2,7 +2,7 @@ import { addEntity } from '../engine/entity.js';
 import { isKeyPressed } from '../engine/input.js';
 import { getPlayerCollider, getPlayerTransform } from '../engine/meta.js';
 
-import { DialogBox } from '../entities/dialog-box/dialog-box.js';
+import { DialogBox } from '../entities/ui/dialog-box/dialog-box.js';
 
 import { isWithinBoundsOf } from '../utils/collision.js';
 import { noop } from '../utils/noop.js';

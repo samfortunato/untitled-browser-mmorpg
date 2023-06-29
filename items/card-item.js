@@ -1,6 +1,7 @@
 import { Item } from './item.js';
 
 import { CardCollection } from '../system/collections/cards.js';
+
 import { Card } from './cards/card.js';
 
 export class CardItem extends Item {

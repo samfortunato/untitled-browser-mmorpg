@@ -1,7 +1,7 @@
 export class AudioEmitter {
-  constructor(audioName, volume = 1) {
-    this.audioElement = document.createElement('audio');
+  audioElement = document.createElement('audio');
 
+  constructor(audioName, volume = 1) {
     this.audioElement.src = `./assets/sfx/${audioName}.mp3`;
     this.audioElement.volume = volume;
   }
@@ -12,6 +12,7 @@ export class AudioEmitter {
 
   loop() {
     this.audioElement.loop = true;
+
     if (this.audioElement.paused) this.audioElement.play();
   }
 

@@ -6,7 +6,6 @@ let deltaTime = 0;
  * vs. the start of the current frame.
  * */
 export function calculateDeltaTime(currentTimeAtStartOfFrame = 0) {
-  // `currentTimeAtStartOfFrame` is undefined on first frame
   deltaTime = (currentTimeAtStartOfFrame - previousTimeAtStartOfFrame) / 1000;
   previousTimeAtStartOfFrame = currentTimeAtStartOfFrame;
 }

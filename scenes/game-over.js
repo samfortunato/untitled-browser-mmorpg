@@ -1,5 +1,3 @@
 import { Scene } from './scene.js';
 
-export class GameOverScene extends Scene {
-
-}
+export class GameOverScene extends Scene { }
