@@ -1,5 +1,6 @@
 import { toggleMute } from '../../engine/audio.js';
 import { addEntity } from '../../engine/entity.js';
+import { UIManager } from '../../engine/ui.js';
 
 import { Entity } from '../entity.js';
 import { MenuButton } from './menu-button.js';
@@ -56,7 +57,7 @@ export class Menu extends Entity {
   }
 
   onInventoryClick() {
-    addEntity(new InventoryWindow());
+    UIManager.setCurrentlyFocusedWindow(new InventoryWindow());
   }
 
   onStatsClick() {
