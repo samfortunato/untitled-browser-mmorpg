@@ -1,0 +1,10 @@
+export const RARITY = {
+  COMMON: 0,
+  UNCOMMON: 1,
+  RARE: 2,
+  SUPER_RARE: 3,
+  ULTRA_RARE: 4,
+  HYPER_RARE: 5,
+  SECRET_RARE: 6,
+  GHOST_RARE: 10,
+};

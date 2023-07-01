@@ -8,6 +8,8 @@ export class Inventory {
   static add(item) {
     this.inventory.set(item.uniqueId.id, item);
   }
-}
 
-Inventory.remove()
+  static getAll() {
+    return [...this.inventory.values()];
+  }
+}

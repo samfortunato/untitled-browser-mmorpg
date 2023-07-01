@@ -12,6 +12,10 @@ export function getPlayerCollider() {
   return { ...playerCollider };
 }
 
+export function getPlayerBounds() {
+  return { ...playerTransform, ...playerCollider };
+}
+
 /** @param {Transform} transform */
 export function setPlayerTransform(transform) {
   playerTransform.x = transform.x;

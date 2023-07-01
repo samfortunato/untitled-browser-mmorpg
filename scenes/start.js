@@ -17,6 +17,8 @@ import { Electra } from '../entities/npc/electra/electra.js';
 import { Bee } from '../entities/npc/bee/bee.js';
 import { Pet } from '../entities/npc/pet/pet.js';
 
+import { Sword } from '../items/sword.js';
+
 import { MusicEmitter } from '../components/music-emitter.js';
 
 export class StartScene extends Scene {
@@ -31,6 +33,7 @@ export class StartScene extends Scene {
       // new Truck(),
       // new BlueGuy(),
       new Electra(600, 200),
+      new Sword(680, 220),
       // new Pet(900, 400),
       new Player(400, 400),
       // new Bee(400, 450),
