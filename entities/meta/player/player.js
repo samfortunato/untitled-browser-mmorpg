@@ -18,6 +18,8 @@ import { PlayerName } from './player-name.js';
 import { Collider } from '../../../components/collider.js';
 import { AudioEmitter } from '../../../components/audio-emitter.js';
 
+import { Vector3 } from '../../../constructs/vector3.js';
+
 import { clampToPixel } from '../../../utils/math.js';
 
 import { PlayerSprite } from './sprite.js';
@@ -34,7 +36,7 @@ export class Player extends Entity {
   state = STATES.IDLE;
   direction = DIRECTIONS.DOWN;
   speed = NORMAL_SPEED;
-  zVelocity = 0;
+  velocity = new Vector3(0, 0, 0);
   playerName = new PlayerName(this.transform.x, this.transform.y, 'Collider');
 
   update(dt) {
@@ -56,7 +58,7 @@ export class Player extends Entity {
       this.speed = isRunKeyPressed() ? RUN_SPEED : NORMAL_SPEED;
 
       if (isJumpKeyPressed()) {
-        this.transform.z += 3;
+        this.velocity.z = 10;
       }
 
       if (isMovementUpKeyPressed()) {
@@ -81,8 +83,13 @@ export class Player extends Entity {
     }
 
     // movement resolution
-    this.transform.z -= GRAVITY;
-    if (this.transform.z < 0) this.transform.z = 0;
+    this.transform.z += this.velocity.z;
+    this.velocity.z -= GRAVITY;
+
+    if (this.transform.z < 0) {
+      this.velocity.z = 0;
+      this.transform.z = 0;
+    }
 
     // meta, for interactions with the player
     setPlayerTransform(this.transform);
@@ -101,6 +108,18 @@ export class Player extends Entity {
 
   /** @param {CanvasRenderingContext2D} ctx */
   draw(ctx) {
+    // shadow
+    if (this.transform.z > 0) {
+      ctx.globalAlpha = Math.min((0.36 + (this.transform.z / 100) / 2), 0.5);
+      ctx.fillStyle = 'black';
+      ctx.beginPath();
+      ctx.ellipse(this.transform.x + 15, this.transform.y + 30, 18, 11, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.closePath();
+
+      ctx.globalAlpha = 1;
+    }
+
     const crouchOffset = this.state === STATES.CROUCHING ? 12 : 0;
 
     this.sprite.step(this.direction, this.state);
@@ -116,11 +135,5 @@ export class Player extends Entity {
     this.playerName.draw(ctx);
 
     // this.collider._draw(ctx, this.transform.x, this.transform.y);
-
-    // shadow
-    // ctx.globalAlpha = 0.5;
-    // ctx.fillStyle = 'black';
-    // ctx.fillRect(this.transform.x, this.transform.y + 12, 32, 20);
-    // ctx.globalAlpha = 1;
   }
 }
