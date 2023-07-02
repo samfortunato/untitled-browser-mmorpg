@@ -1,4 +1,4 @@
-import { getMouseBounds, getMouseMovementDelta, isKeyPressed, isMouseClicked, isMouseDragging } from '../../../engine/input.js';
+import { getMouseBounds, isKeyPressed, isMouseClicked } from '../../../engine/input.js';
 import { setCanPlayerMove } from '../../../engine/player.js';
 
 import { Entity } from '../../entity.js';
@@ -42,11 +42,6 @@ export class TextWindow extends Entity {
       const closeButtonPos = {
         ...this.closeButton.transform,
         ...this.closeButton.collider,
-      };
-
-      const windowBarPos = {
-        ...this.windowBar.transform,
-        ...this.windowBar.collider,
       };
 
       // window dragging functionality
