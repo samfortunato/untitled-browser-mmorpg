@@ -44,13 +44,14 @@ export class TextWindow extends Entity {
         ...this.closeButton.collider,
       };
 
-      const windowBarPos = {
-        ...this.windowBar.transform,
-        ...this.windowBar.collider,
-      };
-
       // window dragging functionality
       // might not use. revisit later
+
+      // const windowBarPos = {
+      //   ...this.windowBar.transform,
+      //   ...this.windowBar.collider,
+      // };
+
       // if (isMouseDragging() && isWithinBoundsOf(getMouseBounds(), windowBarPos)) {
       //   this.transform.translate(getMouseMovementDelta().x, getMouseMovementDelta().y);
 
