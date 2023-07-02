@@ -1,6 +1,7 @@
 import { Item } from './item.js';
 
-import { ITEMS, ITEM_SPRITE_BOUND } from '../assets/items/items.js';
+import { ITEMS } from '../assets/items/items.js';
+import { ITEM_SPRITE_BOUND } from '../assets/items/constants.js';
 
 import { RARITY } from './constants.js';
 
