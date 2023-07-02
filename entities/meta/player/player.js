@@ -37,6 +37,8 @@ export class Player extends Entity {
   direction = DIRECTIONS.DOWN;
   speed = NORMAL_SPEED;
   velocity = new Vector3(0, 0, 0);
+  jumpCount = 0;
+  jumpCooldown = 0;
   playerName = new PlayerName(this.transform.x, this.transform.y, 'Collider');
 
   update(dt) {
@@ -47,7 +49,7 @@ export class Player extends Entity {
       if (isCrouchKeyPressed()) this.state = STATES.CROUCHING;
       if (!isRunKeyPressed() && isAMovementKeyPressed()) this.state = STATES.WALKING;
       if (isRunKeyPressed() && isAMovementKeyPressed()) this.state = STATES.RUNNING;
-      if (isJumpKeyPressed()) this.state = STATES.JUMPING;
+      // if (isJumpKeyPressed()) this.state = STATES.JUMPING;
 
       if (!isCrouchKeyPressed() && !isAMovementKeyPressed() && !isCrouchKeyPressed() && !isJumpKeyPressed()) {
         this.state = STATES.IDLE;
@@ -57,9 +59,14 @@ export class Player extends Entity {
       this.speed = isCrouchKeyPressed() ? CROUCH_SPEED : NORMAL_SPEED;
       this.speed = isRunKeyPressed() ? RUN_SPEED : NORMAL_SPEED;
 
-      if (isJumpKeyPressed()) {
+      if (isJumpKeyPressed() && this.jumpCount < 1 && this.jumpCooldown === 0) {
         this.velocity.z = 10;
+        this.jumpCount++;
+        this.jumpCooldown = 9;
       }
+
+      if (this.jumpCooldown !== 0) this.jumpCooldown--;
+      if (this.transform.z === 0) this.jumpCount = 0;
 
       if (isMovementUpKeyPressed()) {
         this.transform.y -= clampToPixel(this.speed * dt);
