@@ -2,6 +2,8 @@ import { canvas } from './draw.js';
 
 import { Collider } from '../components/collider.js';
 
+import { isWithinBoundsOf } from '../utils/collision.js';
+
 export const CONTROLS = {
   CONFIRM_1: 'Enter',
   CONFIRM_2: 'x',
@@ -50,6 +52,7 @@ export function setupInput() {
 
   document.addEventListener('mousedown', () => {
     if (!input.hasInteracted) input.hasInteracted = true;
+
     input.isMouseClicked = true;
   });
 
@@ -194,6 +197,10 @@ export function getMouseBounds() {
 
 export function isMouseClicked() {
   return input.isMouseClicked;
+}
+
+export function didClickWithinBounds(bounds) {
+  return isMouseClicked() && isWithinBoundsOf(bounds, getMouseBounds());
 }
 
 export function isMouseDragging() {
