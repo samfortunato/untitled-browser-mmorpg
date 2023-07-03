@@ -3,6 +3,10 @@ import { Dimensions } from './dimensions.js';
 export class Collider {
   dimensions = new Dimensions();
 
+  static fromDimensions(dimensions) {
+    return new Collider(0, dimensions.width, dimensions.height, dimensions.height);
+  }
+
   constructor(topLeft = 0, topRight = 0, bottomRight = 0, bottomLeft = 0) {
     this.topLeft = topLeft;
     this.topRight = topRight;
