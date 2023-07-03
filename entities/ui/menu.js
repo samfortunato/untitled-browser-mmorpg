@@ -6,6 +6,7 @@ import { Entity } from '../entity.js';
 import { MenuButton } from './menu-button.js';
 import { TextWindow } from '../ui/text-window/text-window.js';
 import { InventoryWindow } from './inventory-window.js';
+import { SettingsWindow } from './settings-window/settings-window.js';
 
 import { Dimensions } from '../../components/dimensions.js';
 
@@ -16,7 +17,7 @@ export class Menu extends Entity {
     new MenuButton('Inventory', this.onInventoryClick),
     new MenuButton('Stats', this.onStatsClick),
     new MenuButton('Guild', this.onGuildClick),
-    new MenuButton('Options', this.onOptionsClick),
+    new MenuButton('Settings', this.onSettingsClick),
     new MenuButton('Mute', this.onMuteClick),
   ];
 
@@ -73,8 +74,8 @@ export class Menu extends Entity {
     addEntity(new TextWindow('Guild'));
   }
 
-  onOptionsClick() {
-    addEntity(new TextWindow('Options'));
+  onSettingsClick() {
+    addEntity(new SettingsWindow());
   }
 
   onMuteClick() {
