@@ -18,7 +18,7 @@ import { PlayerName } from './player-name.js';
 import { Collider } from '../../../components/collider.js';
 import { AudioEmitter } from '../../../components/audio-emitter.js';
 
-import { Vector3 } from '../../../constructs/vector3.js';
+import { Velocity3D } from '../../../constructs/velocity3d.js';
 
 import { clampToPixel } from '../../../utils/math.js';
 
@@ -36,7 +36,7 @@ export class Player extends Entity {
   state = STATES.IDLE;
   direction = DIRECTIONS.DOWN;
   speed = NORMAL_SPEED;
-  velocity = new Vector3(0, 0, 0);
+  velocity = new Velocity3D();
   jumpCount = 0;
   jumpCooldown = 0;
   playerName = new PlayerName(this.transform.x, this.transform.y, 'Collider');
@@ -60,7 +60,7 @@ export class Player extends Entity {
       this.speed = isRunKeyPressed() ? RUN_SPEED : NORMAL_SPEED;
 
       if (isJumpKeyPressed() && this.jumpCount < 1 && this.jumpCooldown === 0) {
-        this.velocity.z = 10;
+        this.velocity.applyForce(0, 0, 10);
         this.jumpCount++;
         this.jumpCooldown = 9;
       }
