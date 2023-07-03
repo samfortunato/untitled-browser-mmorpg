@@ -4,4 +4,4 @@ export const PORTRAITS = {
 };
 
 PORTRAITS.BLUE_GUY.src = './assets/portraits/blue-guy.gif';
-PORTRAITS.ELECTRA.src = './assets/portraits/electra.gif';
+PORTRAITS.ELECTRA.src = './assets/portraits/electra-2.png';
