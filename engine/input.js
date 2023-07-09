@@ -95,7 +95,9 @@ export function isKeyPressed(key) {
 }
 
 export function areKeysPressed(...keys) {
-  return keys.some(key => input.pressedKeys[key] === true);
+  return keys.some(key =>
+    isKeyPressed(key)
+  );
 }
 
 export function isConfirmKeyPressed() {
