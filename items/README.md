@@ -32,6 +32,8 @@ and some crafting items have meta effects (e.g. Reflect Putty, which duplicates 
     - make the graphics for this SO cool. like a dark gray, but iridescent and rainbow-y. make it FEEL and LOOK rare and AMAZING.
   - time putty: when combined with a recipe that produces a time limited effect, it increases the duration of that time limit.
     - varied depending on the recipe?
+  - metallic putties: dropped by Metal Slimes (thank u @Sora from let's draw for this idea)
+    - could be used to strengthen items? so, take a sword, craft it with a Silver Putty, and you get a sword with 2+ extra ATK.
 
 - powders: helpful in creating status effect potions
   - green powder: when mixed in a potion, restores HP
