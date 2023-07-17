@@ -6,6 +6,10 @@ export class DebugInfo extends Entity {
   dt = 0;
   fps = 0;
 
+  constructor(x = 16, y = 16) {
+    super(x, y);
+  }
+
   update(dt) {
     this.dt = dt;
     this.fps = getFps();
