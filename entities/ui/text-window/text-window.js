@@ -1,4 +1,4 @@
-import { getMouseBounds, getMouseMovementDelta, isKeyPressed, isMouseClicked, isMouseDragging } from '../../../engine/input.js';
+import { getMouseBounds, getMouseMovementDelta, isCancelKeyPressed, isKeyPressed, isMouseClicked, isMouseDragging } from '../../../engine/input.js';
 import { setCanPlayerMove } from '../../../engine/player.js';
 
 import { Entity } from '../../entity.js';
@@ -60,10 +60,12 @@ export class TextWindow extends Entity {
       // }
 
       if (isWithinBoundsOf(getMouseBounds(), closeButtonPos)) {
-        setCanPlayerMove(true);
-
-        this.destroy();
+        this.onClose();
       }
+    }
+
+    if (isCancelKeyPressed()) {
+      this.onClose();
     }
   }
 
@@ -98,5 +100,11 @@ export class TextWindow extends Entity {
 
     this.closeButton.draw(ctx);
     // this.windowBar.draw(ctx);
+  }
+
+  onClose() {
+    setCanPlayerMove(true);
+
+    this.destroy();
   }
 }

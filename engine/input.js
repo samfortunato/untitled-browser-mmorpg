@@ -8,7 +8,7 @@ export const CONTROLS = {
   CONFIRM_1: 'Enter',
   CONFIRM_2: 'x',
   CONFIRM_3: 'X',
-  CANCEL: 'Esc',
+  CANCEL: 'Escape',
   MOVE_UP_1: 'ArrowUp',
   MOVE_RIGHT_1: 'ArrowRight',
   MOVE_DOWN_1: 'ArrowDown',
@@ -25,6 +25,7 @@ export const CONTROLS = {
   CROUCH_1: 'Meta',
   CROUCH_2: 'Control',
   RUN: 'Shift',
+  ATTACK: 'Enter',
 }
 
 const mouseCollider = new Collider(0, 0, 0, 0);
@@ -106,6 +107,10 @@ export function isConfirmKeyPressed() {
   );
 }
 
+export function isCancelKeyPressed() {
+  return input.pressedKeys[CONTROLS.CANCEL];
+}
+
 export function isCrouchKeyPressed() {
   return (
     input.pressedKeys[CONTROLS.CROUCH_1] ||
@@ -168,6 +173,10 @@ export function isMovementLeftKeyPressed() {
     input.pressedKeys[CONTROLS.MOVE_LEFT_2] ||
     input.pressedKeys[CONTROLS.MOVE_LEFT_3]
   );
+}
+
+export function isAttackKeyPressed() {
+  return input.pressedKeys[CONTROLS.ATTACK];
 }
 
 export function getMousePos() {

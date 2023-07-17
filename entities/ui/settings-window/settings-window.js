@@ -1,3 +1,5 @@
+import { isCancelKeyPressed } from '../../../engine/input.js';
+
 import { Entity } from '../../entity.js';
 import { CloseButtonNew } from '../close-button-new.js';
 import { MenuItemWithToggle } from '../menu-item-with-toggle.js';
@@ -6,21 +8,20 @@ import { Dimensions } from '../../../components/dimensions.js';
 
 import { Padding } from '../../../constructs/padding.js';
 
-import { calculateCenterOfScreenX, calculateCenterOfScreenY } from '../../../utils/math.js';
+import { calculateScreenCenterForEntityX, calculateScreenCenterForEntityY } from '../../../utils/math.js';
 
 export class SettingsWindow extends Entity {
   dimensions = new Dimensions(400, 300);
   padding = new Padding(20, 20);
 
   closeButton = new CloseButtonNew(0, 0, this.onClose.bind(this));
-
   menuItems = [];
 
   constructor() {
     super();
 
-    this.transform.x = calculateCenterOfScreenX(this.dimensions);
-    this.transform.y = calculateCenterOfScreenY(this.dimensions) - 100;
+    this.transform.x = calculateScreenCenterForEntityX(this.dimensions);
+    this.transform.y = calculateScreenCenterForEntityY(this.dimensions) - 100;
 
     this.closeButton.transform.x = this.transform.x + this.dimensions.width - this.closeButton.dimensions.width;
     this.closeButton.transform.y = this.transform.y;
@@ -39,6 +40,10 @@ export class SettingsWindow extends Entity {
     this.closeButton.update();
 
     this.menuItems.forEach(item => item.update());
+
+    if (isCancelKeyPressed()) {
+      this.destroy();
+    }
   }
 
   draw(ctx) {
