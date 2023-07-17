@@ -1,6 +1,8 @@
 import { areKeysPressed, isKeyPressed } from '../../../engine/input.js';
 import { processCommand } from '../../../engine/command.js';
 import { setCanPlayerMove } from '../../../engine/player.js';
+import { sendServerData } from '../../../engine/server.js';
+import { getLatestChat } from '../../../engine/chat.js';
 
 import { Entity } from '../../entity.js';
 
@@ -8,6 +10,7 @@ import { Dimensions } from '../../../components/dimensions.js';
 import { Offset } from '../../../constructs/offset.js';
 
 import { PLACEHOLDER_TEXT } from './constants.js';
+import { MESSAGE_TYPES } from '../../../server/constants.js';
 
 export class ChatWindow extends Entity {
   dimensions = new Dimensions(0, 200);
@@ -30,6 +33,9 @@ export class ChatWindow extends Entity {
   }
 
   update(dt) {
+    const latestChat = getLatestChat();
+    if (latestChat) this.#logChat(latestChat);
+
     if (!this.isFocused && areKeysPressed('t', 'T')) {
       if (this.inputField.value === PLACEHOLDER_TEXT) this.inputField.value = '';
       this.inputField.focus();
@@ -48,9 +54,10 @@ export class ChatWindow extends Entity {
       if (this.inputField.value.startsWith('/')) {
         processCommand(this.inputField.value);
       } else {
-        const newChat = document.createElement('li');
-        newChat.textContent = `Collider: ${this.inputField.value}`;
-        this.chatLog.append(newChat);
+        sendServerData(JSON.stringify({
+          type: MESSAGE_TYPES.CHAT,
+          data: this.inputField.value,
+        }));
       }
 
       this.inputField.value = PLACEHOLDER_TEXT;
@@ -102,5 +109,12 @@ export class ChatWindow extends Entity {
     this.chatLog.style.outline = 'none';
 
     document.body.append(this.chatLog);
+  }
+
+  #logChat(chat) {
+    const newChat = document.createElement('li');
+    newChat.textContent = `Collider: ${chat}`;
+
+    this.chatLog.append(newChat);
   }
 }
