@@ -14,6 +14,7 @@ export class CloseButtonNew extends Entity {
 
   dimensions = new Dimensions(32, 32);
   iconOffset = new Offset(11, 5);
+  animationOffset = new Offset();
 
   constructor(x, y, onClose) {
     super(x, y);
@@ -22,20 +23,20 @@ export class CloseButtonNew extends Entity {
   }
 
   update() {
-    if (isMouseClicked()) {
-      if (this.isMouseWithinBoundsOfButton()) {
-        this.onClose();
-      }
+    if (isMouseClicked() && this.isMouseWithinBoundsOfButton()) {
+      this.onClose();
     }
   }
 
   draw(ctx) {
+    const xPos = this.transform.x + this.animationOffset.x;
+
     ctx.fillStyle = 'black';
-    ctx.fillRect(this.transform.x, this.transform.y, this.dimensions.width, this.dimensions.height);
+    ctx.fillRect(xPos, this.transform.y, this.dimensions.width, this.dimensions.height);
 
     ctx.fillStyle = 'white';
     ctx.font = '500 1.3rem Titillium Web';
-    ctx.fillText('x', this.transform.x + this.iconOffset.x, this.transform.y + this.iconOffset.y);
+    ctx.fillText('x', xPos + this.iconOffset.x, this.transform.y + this.iconOffset.y);
   }
 
   isMouseWithinBoundsOfButton() {

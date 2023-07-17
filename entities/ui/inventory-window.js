@@ -5,6 +5,8 @@ import { Entity } from '../entity.js';
 import { CloseButtonNew } from './close-button-new.js';
 
 import { Dimensions } from '../../components/dimensions.js';
+import { Offset } from '../../constructs/offset.js';
+import { Easer } from '../../constructs/easer.js';
 
 import { TILE_SIZE_RENDERED } from '../../constants/draw.js';
 import { ITEM_SPRITE_BOUND } from '../../assets/items/constants.js';
@@ -17,6 +19,9 @@ export class InventoryWindow extends Entity {
   dimensions = new Dimensions(TILE_SIZE_RENDERED * AMOUNT_ITEMS_ON_EACH_ROW, document.documentElement.clientHeight);
 
   closeButton = new CloseButtonNew(0, 0, this.onClose.bind(this));
+  animationOffset = new Offset(this.dimensions.width + this.closeButton.dimensions.width, 0);
+  easer = new Easer(100, 10);
+  canInteract = false;
 
   constructor() {
     super();
@@ -25,21 +30,34 @@ export class InventoryWindow extends Entity {
     this.closeButton.transform.x = this.transform.x - this.closeButton.dimensions.width;
   }
 
-  update() {
+  update(dt) {
+    // debugger;
+    const easeBy = this.easer.easeBy() * (dt * 100);
+
+    this.animationOffset.x -= easeBy;
+    this.closeButton.animationOffset.x -= easeBy;
+
+    if (this.animationOffset.x <= 0) {
+      this.animationOffset.x = 0;
+      this.canInteract = true;
+    }
+
     this.closeButton.update();
   }
 
   /** @param {CanvasRenderingContext2D} ctx */
   draw(ctx) {
+    const xPos = this.transform.x + this.animationOffset.x;
+
     // window bg
     ctx.fillStyle = 'black';
-    ctx.fillRect(this.transform.x, this.transform.y, this.dimensions.width, this.dimensions.height);
+    ctx.fillRect(xPos, this.transform.y, this.dimensions.width, this.dimensions.height);
 
     // equipped
     ctx.globalAlpha = 0.3;
     ctx.drawImage(
       UI.EQUIP_MANNEQUIN,
-      this.transform.x + ((TILE_SIZE_RENDERED * AMOUNT_ITEMS_ON_EACH_ROW / 2) - 200 / 2),
+      xPos + ((TILE_SIZE_RENDERED * AMOUNT_ITEMS_ON_EACH_ROW / 2) - 200 / 2),
       this.transform.y + 50,
       200, 284
     );
@@ -50,7 +68,7 @@ export class InventoryWindow extends Entity {
     let y = START_OF_ITEMS_LIST_Y;
 
     for (const [i, item] of Object.entries(Inventory.getAll())) {
-      item.constructor.draw(ctx, { x: (x * ITEM_SPRITE_BOUND * 2) + this.transform.x, y });
+      item.constructor.draw(ctx, { x: (x * ITEM_SPRITE_BOUND * 2) + xPos, y });
 
       x++;
       y++;
