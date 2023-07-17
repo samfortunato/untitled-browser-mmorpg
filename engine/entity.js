@@ -10,6 +10,10 @@ export function addEntities(entities) {
   }
 }
 
+export function destroyAllEntities() {
+  allEntities.clear();
+}
+
 /**
  * @private
  *

@@ -2,6 +2,7 @@ import { GameMap } from './game-map.js';
 
 export class StartMap extends GameMap {
   static tilesetName = 'FIELD';
+
   static tiles = [
     [
       67,

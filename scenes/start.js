@@ -1,25 +1,29 @@
 import { addEntities } from '../engine/entity.js';
 
 import { Scene } from './scene.js';
+import { EmeraldRunScene } from './emerald-run.js';
 
 import { StartMap } from '../maps/start.js';
 
+import { SceneWarp } from '../entities/meta/scene-warp.js';
 import { Player } from '../entities/meta/player/player.js';
-import { EventTrigger } from '../entities/meta/event.js';
-import { DebugInfo } from '../entities/ui/debug-info.js';
-import { ChatWindow } from '../entities/ui/chat-window/chat-window.js';
+import { UI } from '../entities/ui/ui.js';
 import { AreaInfo } from '../entities/ui/area-info.js';
-import { MapEditor } from '../entities/ui/map-editor/map-editor.js';
-import { Menu } from '../entities/ui/menu.js';
-import { Truck } from '../entities/object/truck.js';
-import { BlueGuy } from '../entities/npc/blue-guy/blue-guy.js';
 import { Electra } from '../entities/npc/electra/electra.js';
-import { Bee } from '../entities/npc/bee/bee.js';
-import { Pet } from '../entities/npc/pet/pet.js';
+import { DebugInfo } from '../entities/ui/debug-info.js';
 
 import { Sword } from '../items/sword.js';
 
 import { MusicEmitter } from '../components/music-emitter.js';
+import { Collider } from '../components/collider.js';
+
+import { Position } from '../constructs/position.js';
+
+/**
+ * NOTES:
+ * maybe make it so you don't have to import the UI in every scene.
+ * make it auto update and draw somehow?
+ */
 
 export class StartScene extends Scene {
   map = StartMap;
@@ -29,19 +33,24 @@ export class StartScene extends Scene {
     super.initialize();
 
     addEntities([
-      // new EventTrigger(300, 300),
-      // new Truck(),
-      // new BlueGuy(),
+      this.buildWarpToEmeraldRun(),
       new Electra(600, 200),
       new Sword(680, 225),
-      // new Sword(714, 220),
-      // new Pet(900, 400),
       new Player(400, 400),
-      // new Bee(400, 450),
-      new Menu(),
-      new ChatWindow(),
+      new UI(),
       new AreaInfo(),
-      // new DebugInfo(16, 16),
+      // new DebugInfo(),
     ]);
+  }
+
+  buildWarpToEmeraldRun() {
+    const sceneWarp = new SceneWarp(
+      0, 0,
+      new EmeraldRunScene(),
+      new Collider(0, 32, 32, 32),
+      new Position(0, 0),
+    );
+
+    return sceneWarp;
   }
 }
