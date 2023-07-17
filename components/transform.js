@@ -1,3 +1,9 @@
+/**
+ * Position in game space.
+ *
+ * (Usually?) represents the top left corner of the object.
+ * (Most?) objects can be represented as a box/rectangle.
+ */
 export class Transform {
   static copy(transform) {
     return new Transform(transform.x, transform.y, transform.z);

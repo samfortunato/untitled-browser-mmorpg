@@ -1,5 +1,12 @@
 import { Dimensions } from './dimensions.js';
 
+/**
+ * A boundary.
+ *
+ * Use to simulate collisions, etc.
+ * If you want an object to be able to detect if it's touching something else,
+ * it needs a `Collider`.
+ */
 export class Collider {
   dimensions = new Dimensions();
 
