@@ -1,5 +1,6 @@
 import {
   isAMovementKeyPressed,
+  isAttackKeyPressed,
   isCrouchKeyPressed,
   isJumpKeyPressed,
   isMovementDownKeyPressed,
@@ -24,7 +25,7 @@ import { clampToPixel } from '../../../utils/math.js';
 
 import { PlayerSprite } from './sprite.js';
 import { STATES } from './states.js';
-import { CROUCH_SPEED, NORMAL_SPEED, RUN_SPEED } from './constants.js';
+import { CROUCH_SPEED, JUMP_COOLDOWN, NORMAL_SPEED, RUN_SPEED } from './constants.js';
 import { DIRECTIONS } from '../../../constants/directions.js';
 
 export class Player extends Entity {
@@ -62,7 +63,7 @@ export class Player extends Entity {
       if (isJumpKeyPressed() && this.jumpCount < 1 && this.jumpCooldown === 0) {
         this.velocity.applyForce(0, 0, 10);
         this.jumpCount++;
-        this.jumpCooldown = 9;
+        this.jumpCooldown = JUMP_COOLDOWN;
       }
 
       if (this.jumpCooldown !== 0) this.jumpCooldown--;
@@ -86,6 +87,10 @@ export class Player extends Entity {
       if (isMovementLeftKeyPressed()) {
         this.transform.x -= clampToPixel(this.speed * dt);
         this.direction = DIRECTIONS.LEFT;
+      }
+
+      if (isAttackKeyPressed()) {
+
       }
     }
 
