@@ -1,3 +1,6 @@
+/**
+ * Represents visual whitespace padding for UI views.
+ */
 export class Padding {
   constructor(x = 0, y = 0) {
     this.x = x;

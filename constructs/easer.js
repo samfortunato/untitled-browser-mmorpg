@@ -1,3 +1,11 @@
+/**
+ * Use this to ease into a number value over time.
+ *
+ * Think of it like a gentle easing curve on a graph.
+ * The number returned eventually will reach 0.
+ *
+ * Use this for things like UI animations.
+ * */
 export class Easer {
   constructor(modifier = 0, easeAmount) {
     this.modifier = modifier;

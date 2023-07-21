@@ -1,3 +1,4 @@
+/** Component for an entity's in-game graphics. */
 export class Sprite {
   name = '';
   img = new Image();

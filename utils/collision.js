@@ -1,3 +1,15 @@
+/**
+ * @typedef {Object} Boundary
+ * @property {number} x
+ * @property {number} y
+ * @property {number} topRight
+ * @property {number} bottomLeft
+ * */
+
+/**
+ * @param {Boundary} posA
+ * @param {Boundary} posB
+ */
 export function isWithinBoundsOf(posA, posB) {
   return (
     posA.x < posB.x + posB.topRight &&
