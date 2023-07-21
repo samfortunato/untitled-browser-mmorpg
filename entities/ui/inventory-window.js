@@ -10,7 +10,7 @@ import { Easer } from '../../constructs/easer.js';
 
 import { TILE_SIZE_RENDERED } from '../../constants/draw.js';
 import { ITEM_SPRITE_BOUND } from '../../assets/items/constants.js';
-import { UI } from '../../assets/ui/ui.js';
+import { PORTRAITS } from '../../assets/portraits/portraits.js';
 
 const AMOUNT_ITEMS_ON_EACH_ROW = 10;
 const START_OF_ITEMS_LIST_Y = 400;
@@ -31,7 +31,6 @@ export class InventoryWindow extends Entity {
   }
 
   update(dt) {
-    // debugger;
     const easeBy = this.easer.easeBy() * (dt * 100);
 
     this.animationOffset.x -= easeBy;
@@ -53,15 +52,19 @@ export class InventoryWindow extends Entity {
     ctx.fillStyle = 'black';
     ctx.fillRect(xPos, this.transform.y, this.dimensions.width, this.dimensions.height);
 
+    // username
+    ctx.fillStyle = 'white';
+    ctx.textAlign = 'center';
+    ctx.font = '2rem Titillium Web';
+    ctx.fillText('Collider', this.transform.x + (this.dimensions.width / 2), this.transform.y + 32);
+
     // equipped
-    ctx.globalAlpha = 0.3;
     ctx.drawImage(
-      UI.EQUIP_MANNEQUIN,
-      xPos + ((TILE_SIZE_RENDERED * AMOUNT_ITEMS_ON_EACH_ROW / 2) - 200 / 2),
-      this.transform.y + 50,
-      200, 284
+      PORTRAITS.HERO_MALE,
+      xPos + ((TILE_SIZE_RENDERED * AMOUNT_ITEMS_ON_EACH_ROW / 2) - 85.9 / 2),
+      this.transform.y + 90,
+      85.9, 284
     );
-    ctx.globalAlpha = 1;
 
     // items
     let x = 0;
