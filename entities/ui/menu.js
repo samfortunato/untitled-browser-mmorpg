@@ -25,7 +25,7 @@ export class Menu extends Entity {
   buttonOffset = { x: 0, y: 2 };
   gap = 2;
 
-  constructor(x = 0, y = 622) {
+  constructor(x = 0, y = 614) {
     super(x, y);
 
     this.items.forEach((item, idx) => {
