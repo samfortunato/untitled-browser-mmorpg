@@ -2,7 +2,7 @@
 
 Other, Inc.'s first game - a retro MMORPG that runs entirely in your browser.
 
-# Philosophy
+## Philosophy
 
 - give things LOVE AND ATTENTION. fuck the "shotgun" style of coding popular in startups and silicon valley.
   we are building something HIGH QUALITY, out of LOVE, ultimately.
@@ -32,3 +32,7 @@ Other, Inc.'s first game - a retro MMORPG that runs entirely in your browser.
   - construct/data structure
   - util
   - constant
+
+## Code Style
+- `const FOO = 'bar'` = a constant.
+- `let Foo = 'bar'` = an important global that can change.
