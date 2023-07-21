@@ -1,5 +1,9 @@
-import { Vector3 } from '../constructs/vector3.js';
+import { Velocity3D } from '../constructs/velocity3d.js';
 
+/**
+ * Represents the current status of any physical properties of an entity.
+ *
+ * e.g. An entity's velocity. */
 export class Physics {
-  velocity = new Vector3();
+  velocity = new Velocity3D();
 }

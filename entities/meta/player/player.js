@@ -17,9 +17,8 @@ import { Entity } from '../../entity.js';
 import { PlayerName } from './player-name.js';
 
 import { Collider } from '../../../components/collider.js';
+import { Physics } from '../../../components/physics.js';
 import { AudioEmitter } from '../../../components/audio-emitter.js';
-
-import { Velocity3D } from '../../../constructs/velocity3d.js';
 
 import { clampToPixel } from '../../../utils/math.js';
 
@@ -30,6 +29,7 @@ import { DIRECTIONS } from '../../../constants/directions.js';
 
 export class Player extends Entity {
   collider = new Collider(0, 32, 32, 32);
+  physics = new Physics();
   walkingAudioEmitter = new AudioEmitter('walking', 0.03);
   runningAudioEmitter = new AudioEmitter('running', 0.03);
   sprite = new PlayerSprite();
@@ -37,7 +37,6 @@ export class Player extends Entity {
   state = STATES.IDLE;
   direction = DIRECTIONS.DOWN;
   speed = NORMAL_SPEED;
-  velocity = new Velocity3D();
   jumpCount = 0;
   jumpCooldown = 0;
   playerName = new PlayerName(this.transform.x, this.transform.y, 'Collider');
@@ -61,7 +60,7 @@ export class Player extends Entity {
       this.speed = isRunKeyPressed() ? RUN_SPEED : NORMAL_SPEED;
 
       if (isJumpKeyPressed() && this.jumpCount < 1 && this.jumpCooldown === 0) {
-        this.velocity.applyForce(0, 0, 10);
+        this.physics.velocity.applyForce(0, 0, 10);
         this.jumpCount++;
         this.jumpCooldown = JUMP_COOLDOWN;
       }
@@ -95,11 +94,11 @@ export class Player extends Entity {
     }
 
     // movement resolution
-    this.transform.z += this.velocity.z;
-    this.velocity.z -= GRAVITY;
+    this.transform.z += this.physics.velocity.z;
+    this.physics.velocity.z -= GRAVITY;
 
     if (this.transform.z < 0) {
-      this.velocity.z = 0;
+      this.physics.velocity.z = 0;
       this.transform.z = 0;
     }
 

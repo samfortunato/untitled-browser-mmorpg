@@ -4,13 +4,12 @@ import { GRAVITY } from '../engine/physics.js';
 import { Entity } from '../entities/entity.js';
 
 import { Dimensions } from '../components/dimensions.js';
-
-import { Velocity3D } from '../constructs/velocity3d.js';
+import { Physics } from '../components/physics.js';
 
 export class Jumper extends Entity {
   dimensions = new Dimensions(32, 32);
+  physics = new Physics();
 
-  velocity = new Velocity3D();
   jumpCount = 0;
   jumpCooldown = 0;
 
@@ -20,16 +19,16 @@ export class Jumper extends Entity {
 
   handleJump() {
     if (isKeyPressed('1') && this.jumpCount < 1) {
-      this.velocity.applyForce(0, 0, 10);
+      this.physics.velocity.applyForce(0, 0, 10);
       this.jumpCount++;
     }
 
-    this.transform.z += this.velocity.z;
-    this.velocity.applyForce(0, 0, -GRAVITY);
+    this.transform.z += this.physics.velocity.z;
+    this.physics.velocity.applyForce(0, 0, -GRAVITY);
 
     if (this.transform.z < 0) {
       this.transform.z = 0;
-      this.velocity.z = 0;
+      this.physics.velocity.z = 0;
     }
   }
 
