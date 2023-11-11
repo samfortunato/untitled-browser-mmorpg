@@ -36,3 +36,5 @@ Other, Inc.'s first game - a retro MMORPG that runs entirely in your browser.
 ## Code Style
 - `const FOO = 'bar'` = a constant.
 - `let Foo = 'bar'` = an important global that can change.
+- no monkey patching
+  - create utils/functionalities/modules to encapsulate related functionality, and import them
