@@ -19,7 +19,9 @@ export function destroyAllEntities() {
  *
  * Do NOT use to destroy an entity.
  *
- * Use `this.destroy()` from the parent `Entity` class instead.
+ * ONLY for use in a parent class' `destroy` method.
+ *
+ * For subclasses, use `this.destroy()` from the parent `Entity` class instead.
  * */
 export function _destroyEntity(entity) {
   allEntities.delete(entity.uniqueId.id);
