@@ -16,7 +16,6 @@ export class EventTrigger extends Entity {
   cooldown = 0;
 
   update() {
-
     if (this.cooldown === 0) {
       const playerPos = {
         ...getPlayerTransform(),
