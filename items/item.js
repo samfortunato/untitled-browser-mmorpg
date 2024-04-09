@@ -15,6 +15,8 @@ export class Item {
   transform = new Transform();
   collider = new Collider(0, 32, 32, 32);
 
+  /** Possibly disable usage of certain items in certain situations. */
+  isDisabled = false;
   contextMenu = {
     'Use': this.use,
   };
