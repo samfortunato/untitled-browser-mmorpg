@@ -60,7 +60,7 @@ export class Player extends Entity {
       this.speed = isRunKeyPressed() ? RUN_SPEED : NORMAL_SPEED;
 
       if (isJumpKeyPressed() && this.jumpCount < 1 && this.jumpCooldown === 0) {
-        this.physics.velocity.applyForce(0, 0, 10);
+        this.physics.velocity.applyForce(0, 0, 6.5);
         this.jumpCount++;
         this.jumpCooldown = JUMP_COOLDOWN;
       }
@@ -95,7 +95,7 @@ export class Player extends Entity {
 
     // movement resolution
     this.transform.z += this.physics.velocity.z;
-    this.physics.velocity.z -= GRAVITY;
+    this.physics.velocity.z -= GRAVITY * dt * 25;
 
     if (this.transform.z < 0) {
       this.physics.velocity.z = 0;
@@ -118,7 +118,7 @@ export class Player extends Entity {
   }
 
   /** @param {CanvasRenderingContext2D} ctx */
-  draw(ctx) {
+  draw(ctx, dt) {
     // shadow
     if (this.transform.z > 0) {
       ctx.globalAlpha = Math.min((0.36 + (this.transform.z / 100) / 2), 0.5);
@@ -133,7 +133,7 @@ export class Player extends Entity {
 
     const crouchOffset = this.state === STATES.CROUCHING ? 12 : 0;
 
-    this.sprite.step(this.direction, this.state);
+    this.sprite.step(this.direction, this.state, dt);
 
     ctx.drawImage(
       this.sprite.img,
