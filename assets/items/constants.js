@@ -1,1 +1,1 @@
-export const ITEM_SPRITE_BOUND = 24;
+export const ITEM_SPRITE_CROP_BOUNDS = 24;

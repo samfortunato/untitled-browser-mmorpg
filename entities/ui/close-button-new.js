@@ -13,7 +13,7 @@ export class CloseButtonNew extends Entity {
   collider = new Collider(0, 32, 32, 32);
 
   dimensions = new Dimensions(32, 32);
-  iconOffset = new Offset(11, 5);
+  iconOffset = new Offset(16, 5);
   animationOffset = new Offset();
 
   constructor(x, y, onClose) {
@@ -29,7 +29,8 @@ export class CloseButtonNew extends Entity {
   }
 
   draw(ctx) {
-    const xPos = this.transform.x + this.animationOffset.x;
+    // const xPos = this.transform.x + this.animationOffset.x;
+    const xPos = this.transform.x;
 
     ctx.fillStyle = 'black';
     ctx.fillRect(xPos, this.transform.y, this.dimensions.width, this.dimensions.height);

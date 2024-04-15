@@ -1,7 +1,7 @@
 import { Item } from './item.js';
 
 import { ITEMS } from '../assets/items/items.js';
-import { ITEM_SPRITE_BOUND } from '../assets/items/constants.js';
+import { ITEM_SPRITE_CROP_BOUNDS } from '../assets/items/constants.js';
 
 import { RARITY } from './constants.js';
 
@@ -31,10 +31,10 @@ export class Sword extends Item {
   static draw(ctx, transform) {
     ctx.drawImage(
       Sword.sprite,
-      8 * ITEM_SPRITE_BOUND, 24 * ITEM_SPRITE_BOUND,
+      8 * ITEM_SPRITE_CROP_BOUNDS, 24 * ITEM_SPRITE_CROP_BOUNDS,
       24, 24,
       transform.x, transform.y,
-      ITEM_SPRITE_BOUND * 2, ITEM_SPRITE_BOUND * 2
+      ITEM_SPRITE_CROP_BOUNDS * 2, ITEM_SPRITE_CROP_BOUNDS * 2
     );
   }
 
