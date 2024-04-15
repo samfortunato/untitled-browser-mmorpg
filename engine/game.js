@@ -2,7 +2,7 @@ import { setupEngine } from './setup.js';
 import { initializeScreen, ctx } from './draw.js';
 import { calculateDeltaTime, getDeltaTime } from './time.js';
 import { getCurrentScene } from './scene.js';
-import { KeyboardShortcutManager } from './keyboard-shortcut-manager.js';
+import { InputManager } from './input.js';
 
 /**
  * Should be a singleton.
@@ -27,7 +27,7 @@ export class Game {
   update(currentTimeAtStartOfFrame) {
     calculateDeltaTime(currentTimeAtStartOfFrame);
 
-    KeyboardShortcutManager.update(getDeltaTime());
+    InputManager.update();
 
     getCurrentScene().update(getDeltaTime());
   }
@@ -35,6 +35,6 @@ export class Game {
   draw() {
     initializeScreen();
 
-    getCurrentScene().draw(ctx);
+    getCurrentScene().draw(ctx, getDeltaTime());
   }
 }

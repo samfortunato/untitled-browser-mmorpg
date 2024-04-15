@@ -3,6 +3,7 @@ import { canvas } from './draw.js';
 import { Collider } from '../components/collider.js';
 
 import { isWithinBoundsOf } from '../utils/collision.js';
+import { KeyboardShortcutManager } from './keyboard-shortcut-manager.js';
 
 export const CONTROLS = {
   CONFIRM_1: 'Enter',
@@ -39,6 +40,12 @@ const input = {
   wheelDelta: { x: 0, y: 0 },
   hasInteracted: false,
 };
+
+export class InputManager {
+  static update() {
+    KeyboardShortcutManager.update();
+  }
+}
 
 export function setupInput() {
   document.addEventListener('mousemove', (evt) => {
