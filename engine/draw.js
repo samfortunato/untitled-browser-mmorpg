@@ -36,3 +36,11 @@ export function initializeScreen() {
 
   ctx.textBaseline = 'top';
 }
+
+export function getScreenWidth() {
+  return document.documentElement.clientWidth;
+}
+
+export function getScreenHeight() {
+  return document.documentElement.clientHeight;
+}
