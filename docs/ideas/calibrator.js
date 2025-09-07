@@ -3,10 +3,10 @@
  *
  * Could be a fun little machine that does something.
  * */
-export class Calibrater {
+export class Calibrator {
   calibrate() { }
 
   recalibrate() { }
 
-  discalibrate() { }
+  uncalibrate() { }
 }
