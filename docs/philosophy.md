@@ -32,3 +32,6 @@
   - construct/data structure
   - util
   - constant
+
+- try not to go too long without committing
+  - if it's a big deal, or you're not finished, make it on another branch
