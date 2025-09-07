@@ -1,5 +1,3 @@
 import { Item } from './item.js';
 
-export class Money extends Item {
-
-}
+export class Money extends Item { }

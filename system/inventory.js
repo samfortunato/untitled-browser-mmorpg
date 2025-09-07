@@ -1,3 +1,7 @@
+/**
+ * TODO: change `uniqueId.id` to `uniqueId.value`?
+ */
+
 export class Inventory {
   static inventory = new Map();
 

@@ -5,6 +5,7 @@ import { SlimeCard } from './slime-card.js';
 const NULL_NAME = 'NULL';
 
 export class Card {
+  // TODO: rename to `name`, probably?
   static cardName = NULL_NAME;
 
   static CARDS = {

@@ -1,3 +1,9 @@
+/**
+ * TODO:
+ * - `contextMenu` should be changed to `context`?
+ *   - make it so users can get info about item, and see a little menu
+ */
+
 import { getPlayerBounds } from '../engine/meta.js';
 import { isKeyPressed } from '../engine/input.js';
 import { _destroyEntity, addEntity } from '../engine/entity.js';

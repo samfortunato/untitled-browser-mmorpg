@@ -1,3 +1,11 @@
+/**
+ * TODO:
+ * - change `cardQuantities` to `collection` or something
+ * - change `cardName` to `name`
+ *
+ * basically, simple names. make it easy?
+ */
+
 import { CardItem } from '../../items/card-item.js';
 import { Card } from '../../items/cards/card.js';
 
