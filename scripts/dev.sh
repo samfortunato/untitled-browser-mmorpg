@@ -1,5 +1,2 @@
-function dev() {
-  npx --yes http-server .
-}
-
-dev
+npx http-server . \
+  --yes
