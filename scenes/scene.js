@@ -24,11 +24,11 @@ export class Scene {
     }
   }
 
-  draw(ctx) {
+  draw(ctx, dt) {
     this.map.draw(ctx);
 
     for (const entity of allEntities.values()) {
-      entity.draw(ctx);
+      entity.draw(ctx, dt);
     }
   }
 }

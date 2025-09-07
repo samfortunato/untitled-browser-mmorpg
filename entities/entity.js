@@ -14,7 +14,7 @@ export class Entity {
 
   update(dt) { }
 
-  draw(ctx) { }
+  draw(ctx, dt) { }
 
   destroy() {
     _destroyEntity(this);
