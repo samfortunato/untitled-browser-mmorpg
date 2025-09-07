@@ -2,6 +2,7 @@
 node_modules/
 
 # Project
+.env
 sandbox/
 dist/
 private/
