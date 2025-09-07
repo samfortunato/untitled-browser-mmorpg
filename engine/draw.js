@@ -17,8 +17,10 @@ window.addEventListener('resize', () => {
 });
 
 function calculateCanvasSize() {
+  // TODO: change to `canvasBounds` or something?
   const canvasBoundingClientRect = canvas.getBoundingClientRect();
 
+  // TODO: change `devicePixelRatio` to `window.devicePixelRatio` to clarify that it is something on the window
   canvas.width = canvasBoundingClientRect.width * devicePixelRatio;
   canvas.height = canvasBoundingClientRect.height * devicePixelRatio;
 
