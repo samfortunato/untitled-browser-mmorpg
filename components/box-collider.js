@@ -16,6 +16,7 @@ export class BoxCollider {
     this.height = height;
   }
 
+  // TODO: maybe change to `debug`.
   _draw(ctx, transform) {
     ctx.strokeStyle = 'red';
     ctx.strokeRect(transform.x, transform.y, this.width, this.height);
