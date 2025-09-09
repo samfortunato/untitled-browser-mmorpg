@@ -4,6 +4,7 @@ import { Entity } from '../entity.js';
 
 import { Collider } from '../../components/collider.js';
 import { AudioEmitter } from '../../components/audio-emitter.js';
+import { Dimensions } from '../../components/dimensions.js';
 
 import { isWithinBoundsOf } from '../../utils/collision.js';
 import { noop } from '../../utils/noop.js';
@@ -11,6 +12,7 @@ import { noop } from '../../utils/noop.js';
 export class MenuButton extends Entity {
   collider = new Collider(0, 100, 40, 40);
   hoverAudioEmitter = new AudioEmitter('menu-button-hover', 0.05);
+  dimensions = new Dimensions(100, 40);
 
   isClicked = false;
   isHovering = false;
@@ -65,6 +67,7 @@ export class MenuButton extends Entity {
 
     ctx.fillStyle = '#ccc';
     ctx.font = '0.8rem sans-serif';
+    ctx.textAlign = 'left';
     ctx.fillText(this.text, this.transform.x + this.textOffset.x, this.transform.y + this.textOffset.y);
 
     this.collider._draw(ctx);
