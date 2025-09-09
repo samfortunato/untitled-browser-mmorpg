@@ -2,6 +2,7 @@ import { areKeysPressed, isKeyPressed } from './input.js';
 import { UIManager } from './ui.js';
 
 import { InventoryWindow } from '../entities/ui/inventory-window.js';
+import { UI } from '../entities/ui/ui.js';
 
 /**
  * Not sure if I like the naming scheme for things like this.
@@ -12,7 +13,7 @@ import { InventoryWindow } from '../entities/ui/inventory-window.js';
  */
 export class KeyboardShortcutManager {
   static update(dt) {
-    if (areKeysPressed('i', 'I')) {
+    if (areKeysPressed('i', 'I') && !UI.chatWindow.isFocused) {
       UIManager.setCurrentlyFocusedWindow(new InventoryWindow());
     }
 
