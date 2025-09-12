@@ -1,13 +1,16 @@
 import { getCurrentScene } from '../../../engine/scene.js';
 import { getMouseBounds, getMousePos, getWheelDelta, isMouseClicked } from '../../../engine/input.js';
+import { getScreenHeight } from '../../../engine/draw.js';
 
 import { Entity } from '../../entity.js';
 import { CloseButtonNew } from '../close-button-new.js';
+import { MenuButton } from '../menu-button.js';
 
 import { Collider } from '../../../components/collider.js';
 
 import { Dimensions } from '../../../components/dimensions.js';
 import { Offset } from '../../../constructs/offset.js';
+import { Gap } from '../../../constructs/gap.js';
 import { calculateTileCrop, getTileset } from '../../../maps/tiles.js';
 import { isWithinBoundsOf } from '../../../utils/collision.js';
 
@@ -22,8 +25,14 @@ export class MapEditor extends Entity {
     document.documentElement.clientHeight,
     document.documentElement.clientHeight,
   );
-  scrollOffset = new Offset();
 
+  menuItems = [
+    new MenuButton('Elevation'),
+    new MenuButton('+ Layer'),
+    new MenuButton('- Layer'),
+  ];
+
+  scrollOffset = new Offset();
   tilesetName = getCurrentScene().map.tilesetName;
   tileset = getTileset(this.tilesetName);
   tileCount = 0;
@@ -31,6 +40,7 @@ export class MapEditor extends Entity {
   selectedTileIndicatorPos = [0, 0];
   selectedTileId = 0;
   clickedTilePos = [0, 0];
+  menuItemGap = new Gap(2);
 
   constructor() {
     super();
@@ -43,6 +53,8 @@ export class MapEditor extends Entity {
 
     if (this.tileset.complete) this.initializeDisplayedTiles()
     else this.tileset.onload = this.initializeDisplayedTiles.bind(this);
+
+    this.#initializeMenuItems();
   }
 
   update() {
@@ -53,6 +65,7 @@ export class MapEditor extends Entity {
     this.changeTileOnMap();
 
     this.closeButton.update();
+    this.#updateMenu();
   }
 
   draw(ctx) {
@@ -66,8 +79,10 @@ export class MapEditor extends Entity {
 
     this.drawTiles(ctx);
     this.drawSelectedTileIndicator(ctx);
+    this.drawModeSelector(ctx);
 
     this.closeButton.draw(ctx);
+    this.#drawMenu(ctx);
 
     // this.collider._draw(ctx, this.transform.x, this.transform.y);
   }
@@ -100,9 +115,23 @@ export class MapEditor extends Entity {
     ctx.closePath();
   }
 
+  drawModeSelector(ctx) {
+    ctx.fillStyle = 'black';
+    ctx.fillRect(this.transform.x - 100, getScreenHeight() - 244, 100, 244);
+  }
+
   initializeDisplayedTiles() {
     this.tileCount = ((this.tileset.width / TILE_SIZE_RAW) * (this.tileset.height / TILE_SIZE_RAW));
     this.displayedTiles = this.buildDisplayedTiles();
+  }
+
+  #initializeMenuItems() {
+    this.menuItems.forEach((item, idx) => {
+      item.transform.set(
+        this.transform.x - item.dimensions.width,
+        (getScreenHeight() - 244) + (item.dimensions.height * idx) + (this.menuItemGap.amount * idx)
+      );
+    });
   }
 
   buildDisplayedTiles() {
@@ -180,6 +209,18 @@ export class MapEditor extends Entity {
       const [column, row] = this.clickedTilePos;
 
       getCurrentScene().map.tiles[row][column] = this.selectedTileId;
+    }
+  }
+
+  #updateMenu() {
+    for (const item of this.menuItems) {
+      item.update();
+    }
+  }
+
+  #drawMenu(ctx) {
+    for (const item of this.menuItems) {
+      item.draw(ctx);
     }
   }
 }
