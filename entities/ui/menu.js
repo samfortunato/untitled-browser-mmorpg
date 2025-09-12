@@ -25,13 +25,10 @@ export class Menu extends Entity {
   buttonOffset = { x: 0, y: 2 };
   gap = 2;
 
-  constructor(x = 0, y = 614) {
+  constructor(x = 0, y = 616) {
     super(x, y);
 
-    this.items.forEach((item, idx) => {
-      item.transform.x = this.transform.x + this.initialButtonOffset + (idx * 100) + this.gap + (this.gap * idx);
-      item.transform.y = this.transform.y + this.buttonOffset.y;
-    });
+    this.#initializeMenuButtons();
   }
 
   update() {
@@ -41,20 +38,8 @@ export class Menu extends Entity {
   }
 
   draw(ctx) {
-    ctx.fillStyle = '#111';
-    ctx.beginPath();
-    ctx.roundRect(
-      this.transform.x,
-      this.transform.y,
-      this.dimensions.width,
-      this.dimensions.height,
-    );
-    ctx.fill();
-    ctx.closePath();
-
-    for (const item of this.items) {
-      item.draw(ctx);
-    }
+    this.#drawMenuBackground(ctx);
+    this.#drawMenuButtons(ctx);
   }
 
   onInventoryClick() {
@@ -80,5 +65,27 @@ export class Menu extends Entity {
 
   onMuteClick() {
     toggleMute();
+  }
+
+  #initializeMenuButtons() {
+    this.items.forEach((item, idx) => {
+      item.transform.x = this.transform.x + this.initialButtonOffset + (idx * 100) + this.gap + (this.gap * idx);
+      item.transform.y = this.transform.y + this.buttonOffset.y;
+    });
+  }
+
+  #drawMenuBackground(ctx) {
+    ctx.fillStyle = '#111';
+
+    ctx.beginPath();
+    ctx.roundRect(this.transform.x, this.transform.y, this.dimensions.width, this.dimensions.height);
+    ctx.fill();
+    ctx.closePath();
+  }
+
+  #drawMenuButtons(ctx) {
+    for (const item of this.items) {
+      item.draw(ctx);
+    }
   }
 }
