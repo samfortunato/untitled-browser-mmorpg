@@ -8,17 +8,32 @@ import { ChatWindow } from './chat-window/chat-window.js';
  */
 
 /** The game's UI. Menu, chat window, etc. */
-export class UI extends Entity {
-  menu = new Menu();
-  chatWindow = new ChatWindow();
+// export class UI extends Entity {
+//   static menu = new Menu();
+//   static chatWindow = new ChatWindow();
 
-  update(dt) {
-    this.menu.update(dt);
-    this.chatWindow.update(dt);
-  }
+//   static update(dt) {
+//     this.menu.update(dt);
+//     this.chatWindow.update(dt);
+//   }
 
-  draw(ctx) {
-    this.menu.draw(ctx);
-    this.chatWindow.draw(ctx);
-  }
+//   static draw(ctx) {
+//     this.menu.draw(ctx);
+//     this.chatWindow.draw(ctx);
+//   }
+// }
+
+export const UI = new Entity();
+
+UI.menu = new Menu();
+UI.chatWindow = new ChatWindow();
+
+UI.update = function (dt) {
+  this.menu.update(dt);
+  this.chatWindow.update(dt);
+}
+
+UI.draw = function (ctx) {
+  this.menu.draw(ctx);
+  this.chatWindow.draw(ctx);
 }

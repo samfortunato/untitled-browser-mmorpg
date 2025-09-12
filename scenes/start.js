@@ -33,11 +33,11 @@ export class StartScene extends Scene {
     super.initialize();
 
     addEntities([
-      this.buildWarpToEmeraldRun(),
+      // this.buildWarpToEmeraldRun(),
       new Electra(600, 200),
       new Sword(680, 225),
       new Player(400, 400),
-      new UI(),
+      UI,
       new AreaInfo(),
       // new DebugInfo(),
     ]);

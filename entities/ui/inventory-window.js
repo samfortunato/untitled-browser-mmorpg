@@ -9,8 +9,9 @@ import { Offset } from '../../constructs/offset.js';
 import { Easer } from '../../constructs/easer.js';
 
 import { TILE_SIZE_RENDERED } from '../../constants/draw.js';
-import { ITEM_SPRITE_BOUND } from '../../assets/items/constants.js';
+import { ITEM_SPRITE_CROP_BOUNDS } from '../../assets/items/constants.js';
 import { PORTRAITS } from '../../assets/portraits/portraits.js';
+import { UI } from '../../assets/ui/ui.js';
 
 const AMOUNT_ITEMS_ON_EACH_ROW = 10;
 const START_OF_ITEMS_LIST_Y = 400;
@@ -31,22 +32,23 @@ export class InventoryWindow extends Entity {
   }
 
   update(dt) {
-    const easeBy = this.easer.easeBy() * (dt * 100);
+    // const easeBy = this.easer.easeBy() * (dt * 100);
 
-    this.animationOffset.x -= easeBy;
-    this.closeButton.animationOffset.x -= easeBy;
+    // this.animationOffset.x -= easeBy;
+    // this.closeButton.animationOffset.x -= easeBy;
 
-    if (this.animationOffset.x <= 0) {
-      this.animationOffset.x = 0;
-      this.canInteract = true;
-    }
+    // if (this.animationOffset.x <= 0) {
+    //   this.animationOffset.x = 0;
+    // }
+    this.canInteract = true;
 
     this.closeButton.update();
   }
 
   /** @param {CanvasRenderingContext2D} ctx */
   draw(ctx) {
-    const xPos = this.transform.x + this.animationOffset.x;
+    // const xPos = this.transform.x + this.animationOffset.x;
+    const xPos = this.transform.x;
 
     // window bg
     ctx.fillStyle = 'black';
@@ -59,19 +61,22 @@ export class InventoryWindow extends Entity {
     ctx.fillText('Collider', this.transform.x + (this.dimensions.width / 2), this.transform.y + 32);
 
     // equipped
+    ctx.globalAlpha = 0.4;
     ctx.drawImage(
-      PORTRAITS.HERO_MALE,
-      xPos + ((TILE_SIZE_RENDERED * AMOUNT_ITEMS_ON_EACH_ROW / 2) - 85.9 / 2),
+      // PORTRAITS.HERO_MALE,
+      UI.EQUIP_MANNEQUIN,
+      xPos + ((TILE_SIZE_RENDERED * AMOUNT_ITEMS_ON_EACH_ROW / 2) - 200 / 2),
       this.transform.y + 90,
-      85.9, 284
-    );
+      200, 284
+      );
+    ctx.globalAlpha = 1;
 
     // items
     let x = 0;
     let y = START_OF_ITEMS_LIST_Y;
 
     for (const [i, item] of Object.entries(Inventory.getAll())) {
-      item.constructor.draw(ctx, { x: (x * ITEM_SPRITE_BOUND * 2) + xPos, y });
+      item.constructor.draw(ctx, { x: (x * ITEM_SPRITE_CROP_BOUNDS * 2) + xPos, y });
 
       x++;
       y++;

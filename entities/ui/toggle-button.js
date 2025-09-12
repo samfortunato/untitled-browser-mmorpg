@@ -12,12 +12,12 @@ export class ToggleButton extends Entity {
   isToggled = false;
   clickCooldown = 0;
 
-  update() {
+  update(dt) {
     const bounds = { ...this.transform, ...this.collider };
 
     if (this.clickCooldown === 0 && didClickWithinBounds(bounds)) {
       this.isToggled = !this.isToggled;
-      this.clickCooldown = 6;
+      this.clickCooldown = 2 * 1000 * dt;
     }
 
     if (this.clickCooldown > 0) this.clickCooldown--;

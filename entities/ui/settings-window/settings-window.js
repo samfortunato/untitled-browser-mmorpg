@@ -36,10 +36,10 @@ export class SettingsWindow extends Entity {
     ];
   }
 
-  update() {
+  update(dt) {
     this.closeButton.update();
 
-    this.menuItems.forEach(item => item.update());
+    this.menuItems.forEach(item => item.update(dt));
 
     if (isCancelKeyPressed()) {
       this.destroy();

@@ -23,8 +23,8 @@ export class MenuItemWithToggle extends Entity {
     this.text = text;
   }
 
-  update() {
-    this.toggleButton.update();
+  update(dt) {
+    this.toggleButton.update(dt);
   }
 
   draw(ctx) {

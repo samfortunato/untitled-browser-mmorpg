@@ -13,7 +13,7 @@ export class EmeraldRunScene extends Scene {
   initialize() {
     addEntities([
       new Player(100, 100),
-      new UI(),
+      UI,
     ]);
   }
 }
