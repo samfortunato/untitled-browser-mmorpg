@@ -1,1 +1,1 @@
-nodemon ./server/index.js
+npx nodemon ./server/index.js
