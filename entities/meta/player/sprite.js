@@ -131,8 +131,8 @@ export class PlayerSprite extends Sprite {
   frameSwitchIntervals = {
     [STATES.IDLE]: 1,
     [STATES.CROUCHING]: 1,
-    [STATES.WALKING]: 8,
-    [STATES.RUNNING]: 6,
+    [STATES.WALKING]: 14,
+    [STATES.RUNNING]: 12,
     [STATES.JUMPING]: 1,
   }
 
@@ -144,7 +144,7 @@ export class PlayerSprite extends Sprite {
     this.setSprite('player');
   }
 
-  step(direction, state) {
+  step(direction, state, dt) {
     // if (this.state === STATES.CROUCHING) this.state = 0;
     // if (this.state === STATES.JUMPING) this.state = 0;
     if (this.state === STATES.WALKING) {
@@ -157,7 +157,7 @@ export class PlayerSprite extends Sprite {
 
     // every 20 frames, switch animation frame
     if (this.tick % this.frameSwitchIntervals[this.state] === 0) {
-      this.currentFrame = this.currentFrame + 1;
+      this.currentFrame += 1;
     }
 
     // reset current frame to first frame in animation, if we are at the end of the animation,
