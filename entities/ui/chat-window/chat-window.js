@@ -13,7 +13,7 @@ import { PLACEHOLDER_TEXT } from './constants.js';
 import { MESSAGE_TYPES } from '../../../server/constants.js';
 
 export class ChatWindow extends Entity {
-  dimensions = new Dimensions(0, 200);
+  dimensions = new Dimensions(0, 197);
 
   inputField = document.createElement('input');
   chatLog = document.createElement('p');

@@ -11,7 +11,7 @@ import { SettingsWindow } from './settings-window/settings-window.js';
 import { Dimensions } from '../../components/dimensions.js';
 
 export class Menu extends Entity {
-  dimensions = new Dimensions(document.documentElement.clientWidth, 44);
+  dimensions = new Dimensions(document.documentElement.clientWidth, 48);
 
   items = [
     new MenuButton('Inventory', this.onInventoryClick),
