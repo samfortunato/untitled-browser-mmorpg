@@ -43,3 +43,8 @@
   - destroy
   - close
   - listen
+
+- simple geometric very common constants should be one letter, or very short?
+  - e.g.:
+    - x, y, z
+    - w, l, h
