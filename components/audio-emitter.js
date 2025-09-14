@@ -1,27 +1,27 @@
 export class AudioEmitter {
-  audioElement = document.createElement('audio');
+  player = document.createElement('audio');
 
   constructor(audioName, volume = 1) {
-    this.audioElement.src = `./assets/sfx/${audioName}.mp3`;
-    this.audioElement.volume = volume;
+    this.player.src = `./assets/sfx/${audioName}.mp3`;
+    this.player.volume = volume;
   }
 
   play() {
-    if (this.audioElement.paused) this.audioElement.play();
+    if (this.player.paused) this.player.play();
   }
 
   loop() {
-    this.audioElement.loop = true;
+    this.player.loop = true;
 
-    if (this.audioElement.paused) this.audioElement.play();
+    if (this.player.paused) this.player.play();
   }
 
   pause() {
-    this.audioElement.pause();
+    this.player.pause();
   }
 
   stop() {
-    this.audioElement.pause();
-    this.audioElement.currentTime = 0;
+    this.player.pause();
+    this.player.currentTime = 0;
   }
 }
