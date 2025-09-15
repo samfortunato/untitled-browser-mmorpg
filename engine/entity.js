@@ -1,11 +1,14 @@
+import { Entity } from '../entities/entity.js';
+
 export const entities = new Map();
 
 export function addEntity(entity) {
   entities.set(entity.id.value, entity);
 }
 
-export function addEntities(entities) {
-  for (const entity of entities) {
+/** @param {Entity[]} additional */
+export function addEntities(additional) {
+  for (const entity of additional) {
     entities.set(entity.id.value, entity);
   }
 }

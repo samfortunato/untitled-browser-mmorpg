@@ -1,4 +1,4 @@
-import { allEntities } from '../engine/entity.js';
+import { entities } from '../engine/entity.js';
 
 import { GameMap } from '../maps/game-map.js';
 
@@ -19,7 +19,7 @@ export class Scene {
   update(dt) {
     // this.music.update();
 
-    for (const entity of allEntities.values()) {
+    for (const entity of entities.values()) {
       entity.update(dt);
     }
   }
@@ -27,7 +27,7 @@ export class Scene {
   draw(ctx, dt) {
     this.map.draw(ctx);
 
-    for (const entity of allEntities.values()) {
+    for (const entity of entities.values()) {
       entity.draw(ctx, dt);
     }
   }
