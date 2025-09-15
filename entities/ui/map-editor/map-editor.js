@@ -83,8 +83,6 @@ export class MapEditor extends Entity {
 
     this.closeButton.draw(ctx);
     this.#drawMenu(ctx);
-
-    // this.collider._draw(ctx, this.transform.x, this.transform.y);
   }
 
   drawTiles(ctx) {

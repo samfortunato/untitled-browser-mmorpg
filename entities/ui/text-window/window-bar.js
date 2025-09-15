@@ -19,9 +19,7 @@ export class WindowBar extends Entity {
     this.collider.bottomLeft = 32;
   }
 
-  /** Debug */
-  draw(ctx) {
-    // this.collider._draw(ctx);
+  debug(ctx) {
     ctx.strokeStyle = 'red';
     ctx.strokeRect(this.transform.x, this.transform.y, this.collider.topRight, 32);
   }

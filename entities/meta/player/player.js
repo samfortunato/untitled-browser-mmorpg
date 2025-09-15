@@ -144,7 +144,5 @@ export class Player extends Entity {
     );
 
     this.playerName.draw(ctx);
-
-    // this.collider._draw(ctx, this.transform.x, this.transform.y);
   }
 }

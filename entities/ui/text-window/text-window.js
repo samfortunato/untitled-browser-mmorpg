@@ -99,7 +99,6 @@ export class TextWindow extends Entity {
     ctx.fillText(this.text, this.transform.x + TEXT_OFFSET.x, this.transform.y + TEXT_OFFSET.y, this.dimensions.width);
 
     this.closeButton.draw(ctx);
-    // this.windowBar.draw(ctx);
   }
 
   onClose() {

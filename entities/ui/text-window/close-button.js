@@ -27,8 +27,6 @@ export class CloseButton extends Entity {
     ctx.textBaseline = 'top';
     ctx.fillStyle = 'black';
     ctx.fillText('x', this.transform.x + this.iconOffset.x, this.transform.y + this.iconOffset.y);
-
-    // this.collider._draw(ctx, this.transform.x, this.transform.y);
   }
 
   setPosition(transform, dimensions) {
