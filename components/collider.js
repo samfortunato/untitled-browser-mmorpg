@@ -31,9 +31,7 @@ export class Collider {
     };
   }
 
-
-  /** For debug. */
-  _draw(ctx, x, y) {
+  debug(ctx, x, y) {
     ctx.strokeStyle = 'red';
     ctx.strokeRect(x, y, this.getDimensions().w, this.getDimensions().h);
   }

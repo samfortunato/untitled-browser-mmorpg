@@ -59,7 +59,7 @@ export class SceneWarp extends Entity {
     }
   }
 
-  draw(ctx) {
-    this.collider._draw(ctx, this.transform.x, this.transform.y);
+  debug(ctx) {
+    this.collider.debug(ctx, this.transform.x, this.transform.y);
   }
 }

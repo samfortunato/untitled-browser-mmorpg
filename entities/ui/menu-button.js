@@ -70,6 +70,6 @@ export class MenuButton extends Entity {
     ctx.textAlign = 'left';
     ctx.fillText(this.text, this.transform.x + this.textOffset.x, this.transform.y + this.textOffset.y);
 
-    this.collider._draw(ctx);
+    this.collider.debug(ctx);
   }
 }
