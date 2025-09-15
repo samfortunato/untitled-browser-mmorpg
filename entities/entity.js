@@ -1,10 +1,10 @@
 import { _destroyEntity } from '../engine/entity.js';
 
-import { UniqueId } from '../components/unique-id.js';
+import { Id } from '../components/id.js';
 import { Transform } from '../components/transform.js';
 
 export class Entity {
-  uniqueId = new UniqueId();
+  id = new Id();
   transform = new Transform();
 
   constructor(x = 0, y = 0) {

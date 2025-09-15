@@ -10,14 +10,14 @@ import { _destroyEntity, addEntity } from '../engine/entity.js';
 
 import { Inventory } from '../system/inventory.js';
 
-import { UniqueId } from '../components/unique-id.js';
+import { Id } from '../components/id.js';
 import { Transform } from '../components/transform.js';
 import { Collider } from '../components/collider.js';
 
 import { isWithinBoundsOf } from '../utils/collision.js';
 
 export class Item {
-  uniqueId = new UniqueId();
+  id = new Id();
   transform = new Transform();
   collider = new Collider(0, 32, 32, 32);
 
