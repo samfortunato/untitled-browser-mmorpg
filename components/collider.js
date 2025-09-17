@@ -1,3 +1,7 @@
+/**
+ * TODO: maybe change to `Bounds`, or something?
+ */
+
 import { Dimensions } from './dimensions.js';
 
 /**
