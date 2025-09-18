@@ -1,3 +1,7 @@
+/**
+ * TODO: why not just audio emitter?
+ */
+
 import { getIsMuted } from '../engine/audio.js';
 import { getHasInteracted } from '../engine/input.js';
 
