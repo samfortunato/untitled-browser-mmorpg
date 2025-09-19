@@ -1,7 +1,7 @@
 {
-  "name": "other-inc-mmorpg",
+  "name": "untitled-browser-mmorpg",
   "version": "1.0.0",
-  "description": "Other, Inc.'s first game - a retro MMORPG that runs entirely in your browser.",
+  "description": "OTHER, Inc.'s first game - a retro MMORPG that runs entirely in your browser.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,7 +12,7 @@
     "url": "git+https://github.com/samfortunato/untitled-browser-mmorpg.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "OTHER, Inc.",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/samfortunato/untitled-browser-mmorpg/issues"
