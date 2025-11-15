@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Register</title>
+	</head>
+
+	<body>
+		<h1>Register</h1>
+
+		<form>
+			<label for="email">Email</label>
+			<input id="email" type="email" name="email">
+
+			<label for="username">Username</label>
+			<input id="username" type="text" name="username">
+
+			<label for="password">Password</label>
+			<input id="password" type="password" name="password">
+
+			<input type="submit" value="Submit">
+		</form>
+
+		<script>
+			document.querySelector('form').addEventListener('submit', async (evt) => {
+				evt.preventDefault();
+
+				const credentials = new FormData(evt.target);
+
+				try {
+					const res = await fetch('http://localhost:3000/register', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							username: credentials.get('username'),
+							email: credentials.get('email'),
+							password: credentials.get('password'),
+						}),
+					});
+
+					const data = await res.json();
+
+					console.log({ res, data });
+
+					window.location.href = './login.html';
+				} catch (err) {
+					console.error(err);
+				}
+			});
+		</script>
+	</body>
+</html>
