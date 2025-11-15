@@ -1,43 +1,77 @@
-import http from 'http';
+import { createServer } from 'http';
+import express from 'express';
 import { WebSocketServer } from 'ws';
+import bcrypt from "bcrypt";
+import Database from 'better-sqlite3';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
-import { options } from './verbs/options.js';
-import { post } from './verbs/post.js';
+dotenv.config();
 
-import { allow } from './engine/allow.js';
-import { respond } from './engine/respond.js';
-import { act } from './engine/act.js';
+const db = new Database('./data/main.db');
+const app = express();
+const server = createServer(app);
+const webSocketServer = new WebSocketServer({ server });
 
-const server = http.createServer((req, res) => {
-  allow(res);
+db.exec(`
+  create table if not exists users (
+    id integer primary key autoincrement,
+    username text unique not null,
+    email text unique not null,
+    password_digest text not null
+  );
+`);
 
-  if (req.method === 'OPTIONS') {
-    options(req, res, () => {
-      res.end();
-    });
-  }
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', '*');
 
-  if (req.method === 'POST') {
-    post(req, res, (body) => {
-      const parsed = JSON.parse(body);
+  next();
+});
 
-      res.setHeader('Content-Type', 'application/json');
+app.use(express.json());
 
-      respond(req, res, parsed);
-    });
+app.post('/register', async (req, res) => {
+  const { username, email, password } = req.body;
+
+  const digest = await bcrypt.hash(password, 10);
+
+  db.prepare(`
+    insert into users (username, email, password_digest)
+    values (?, ?, ?)
+  `).run(
+    username,
+    email,
+    digest,
+  );
+
+  res.json({ wasRegistered: true });
+});
+
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+
+  const user = db.prepare(`
+    select *
+    from users
+    where username = ?
+  `).get(
+    username,
+  );
+
+  const doesPasswordMatch = await bcrypt.compare(password, user.password_digest);
+
+  if (user && doesPasswordMatch) {
+    const sessionToken = jwt.sign({ username }, process.env.AUTH_SECRET);
+
+    res.json({ sessionToken });
   }
 });
 
-const webSocketServer = new WebSocketServer({ server });
-
-webSocketServer.on('connection', (ws, req) => {
-  ws.on('message', (data) => {
-    const parsed = JSON.parse(data.toString());
-
-    act(ws, req, parsed);
+webSocketServer.on('connection', (socket) => {
+  socket.on('message', (data) => {
+    socket.send(data);
   });
-
-  ws.on('error', console.error);
 });
 
 server.listen(3000);
