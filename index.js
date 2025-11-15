@@ -2,6 +2,10 @@ import { _0x343a } from './lock.js';
 
 import { Game } from './engine/game.js';
 
+if (!localStorage.getItem('session_token')) {
+   window.location.href = './login.html';
+}
+
 const game = new Game();
 
 function run(currentTimeAtStartOfFrame) {
