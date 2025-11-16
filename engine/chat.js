@@ -1,7 +1,7 @@
 const chatQueue = [];
 
-export function addLatestChat(chat) {
-  chatQueue.push(chat)
+export function addLatestChat(chatMessage) {
+  chatQueue.push(chatMessage)
 }
 
 export function getLatestChat() {
