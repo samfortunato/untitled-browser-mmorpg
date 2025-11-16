@@ -22,6 +22,10 @@
 		don't have an account? <a href="./register.html">register</a>
 
 		<script>
+			if (localStorage.getItem('session_token')) {
+				window.location.href = './';
+			}
+
 			document.querySelector('form').addEventListener('submit', async (evt) => {
 				evt.preventDefault();
 

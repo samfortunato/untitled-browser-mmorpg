@@ -23,6 +23,10 @@
 		</form>
 
 		<script>
+			if (localStorage.getItem('session_token')) {
+				window.location.href = './';
+			}
+
 			document.querySelector('form').addEventListener('submit', async (evt) => {
 				evt.preventDefault();
 
