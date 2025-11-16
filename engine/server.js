@@ -33,7 +33,7 @@ function onMessage(data) {
   const parsed = JSON.parse(data.data);
 
   switch (parsed.type) {
-    case MESSAGE_TYPES.CHAT: {
+    case 'chatMessage': {
       addLatestChat(parsed.data);
 
       break;
