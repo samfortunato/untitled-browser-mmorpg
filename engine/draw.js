@@ -46,3 +46,10 @@ export function getScreenWidth() {
 export function getScreenHeight() {
   return document.documentElement.clientHeight;
 }
+
+export function getScreenDimensions() {
+  return {
+    w: document.documentElement.clientWidth,
+    h: document.documentElement.clientHeight,
+  };
+}
