@@ -1,3 +1,6 @@
+import { Rotation } from '../constructs/rotation.js';
+import { Vector3 } from '../constructs/vector3.js';
+
 /**
  * Represents a position in game space.
  *
@@ -5,6 +8,9 @@
  * (Most?) objects can be represented as a box/rectangle.
  */
 export class Transform {
+  rotation = new Rotation();
+  scale = new Vector3();
+
   /** @param {Transform} transform */
   static copy(transform) {
     return new Transform(transform.x, transform.y, transform.z);
