@@ -2,10 +2,11 @@
 
 ## backlog
 
+- **better physics system**
+  - **the whole point of the game is that you can jump, and do acrobatic movement! what are you doing?! MAKE THIS!!!!!**
 - make camera follow player
 - issue where inventory doesn't open again if you hit "Inventory" button, close the inventory, and then try to hit it again
   - also doesn't work if you hit `i` either
-- use bun.js (faster bundling, easier bundling, faster websockets?)
 - organize folders better
   - maybe use `src/` pattern?
   - idk!
