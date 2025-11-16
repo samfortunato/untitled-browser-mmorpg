@@ -1,7 +1,9 @@
 import { Entity } from '../entities/entity.js';
 
+/** @type {Map<symbol, Entity>} */
 export const entities = new Map();
 
+/** @param {Entity} entity */
 export function addEntity(entity) {
   entities.set(entity.id.value, entity);
 }
