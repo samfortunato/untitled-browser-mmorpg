@@ -39,7 +39,7 @@ export class Player extends Entity {
   speed = NORMAL_SPEED;
   jumpCount = 0;
   jumpCooldown = 0;
-  playerName = new PlayerName(this.transform.x, this.transform.y, 'Collider');
+  playerName = new PlayerName(this.transform.x, this.transform.y, localStorage.getItem('username') || 'NULL');
 
   update(dt) {
     if (this.transform.z === 0) this.state = STATES.IDLE;
