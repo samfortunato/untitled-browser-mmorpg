@@ -4,8 +4,11 @@ import { GameMap } from '../maps/game-map.js';
 
 import { MusicEmitter } from '../components/music-emitter.js';
 
+import { Space } from '../constructs/space.js';
+
 export class Scene {
   map = GameMap;
+  space = new Space(0);
   // music = new MusicEmitter('somber');
 
   getMap() {
