@@ -19,6 +19,7 @@ export class Menu extends Entity {
     new MenuButton('Guild', this.onGuildClick),
     new MenuButton('Settings', this.onSettingsClick),
     new MenuButton('Mute', this.onMuteClick),
+    new MenuButton('Log Out', this.onLogOutClick),
   ];
 
   initialButtonOffset = 9;
@@ -65,6 +66,13 @@ export class Menu extends Entity {
 
   onMuteClick() {
     toggleMute();
+  }
+
+  onLogOutClick() {
+    localStorage.removeItem('session_token');
+    localStorage.removeItem('username');
+
+    window.location.reload();
   }
 
   #initializeMenuButtons() {
