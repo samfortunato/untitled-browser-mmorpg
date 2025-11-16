@@ -66,9 +66,9 @@ export class ChatWindow extends Entity {
     document.body.append(this.chatLog);
   }
 
-  #logChat(chat) {
+  #logChat(messageInfo) {
     const newChat = document.createElement('li');
-    newChat.textContent = `Collider: ${chat}`;
+    newChat.textContent = `${messageInfo.username}: ${messageInfo.message}`;
 
     this.chatLog.append(newChat);
   }
@@ -97,8 +97,11 @@ export class ChatWindow extends Entity {
         processCommand(this.inputField.value);
       } else {
         sendServerData(JSON.stringify({
-          type: MESSAGE_TYPES.CHAT,
-          data: this.inputField.value,
+          type: 'chatMessage',
+          data: {
+            username: localStorage.getItem('username'),
+            message: this.inputField.value,
+          },
         }));
       }
 
