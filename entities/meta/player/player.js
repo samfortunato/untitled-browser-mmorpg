@@ -131,15 +131,17 @@ export class Player extends Entity {
       ctx.globalAlpha = 1;
     }
 
-    const crouchOffset = this.state === STATES.CROUCHING ? 12 : 0;
-
     this.sprite.step(this.direction, this.state, dt);
+
+    const crouchOffset = this.state === STATES.CROUCHING ? 12 : 0;
+    const screenX = this.transform.x + this.sprite.xOffset;
+    const screenY = (this.transform.y - this.collider.getDimensions().h - this.transform.z) + crouchOffset;
 
     ctx.drawImage(
       this.sprite.img,
       ...this.sprite.getCurrentFrame(),
-      this.transform.x + this.sprite.xOffset,
-      (this.transform.y - this.collider.getDimensions().h - this.transform.z) + crouchOffset,
+      screenX,
+      screenY,
       48, 64
     );
 
