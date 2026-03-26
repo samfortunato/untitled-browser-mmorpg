@@ -3,9 +3,7 @@ import { MESSAGE_TYPES } from '../server/constants.js';
 import { addLatestChat } from './chat.js';
 import { spawnOtherPlayer, updateOtherPlayer, updateOtherPlayerUsername, removeOtherPlayer } from './other-players.js';
 
-const WEB_SOCKET_URL = location.hostname === 'localhost' ?
-  'ws://localhost:3000' :
-  'wss://untitled-browser-mmorpg.fly.dev';
+const WEB_SOCKET_URL = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}`;
 
 /** @type {WebSocket} */
 let ws;
