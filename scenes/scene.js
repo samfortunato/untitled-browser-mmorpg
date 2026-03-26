@@ -33,9 +33,7 @@ export class Scene {
     for (const entity of entities.values()) {
       if (!entity.isUI) entity.draw(ctx, dt);
     }
-  }
 
-  drawUI(ctx, dt) {
     for (const entity of entities.values()) {
       if (entity.isUI) entity.draw(ctx, dt);
     }
