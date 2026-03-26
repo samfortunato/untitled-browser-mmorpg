@@ -25,6 +25,7 @@ import { ChatWindow } from './chat-window/chat-window.js';
 
 export const UI = new Entity();
 
+UI.isUI = true;
 UI.menu = new Menu();
 UI.chatWindow = new ChatWindow();
 

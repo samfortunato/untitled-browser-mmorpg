@@ -6,6 +6,7 @@ import { Transform } from '../components/transform.js';
 export class Entity {
   id = new Id();
   transform = new Transform();
+  isUI = false;
 
   constructor(x = 0, y = 0) {
     this.transform.x = x;

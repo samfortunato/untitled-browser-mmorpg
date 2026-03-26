@@ -43,11 +43,13 @@ export class Game {
   draw() {
     initializeScreen();
 
+    const dt = getDeltaTime();
+
     ctx?.save();
     ctx?.translate(-Camera.x, -Camera.y);
-
-    getCurrentScene().draw(ctx, getDeltaTime());
-
+    getCurrentScene().draw(ctx, dt);
     ctx?.restore();
+
+    getCurrentScene().drawUI(ctx, dt);
   }
 }

@@ -1,6 +1,7 @@
 import { Entity } from '../entity.js';
 
 export class AreaInfo extends Entity {
+  isUI = true;
   underlineOffset = 40;
   margin = 16;
   animationFrame = 0;

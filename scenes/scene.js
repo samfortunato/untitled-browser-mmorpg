@@ -31,7 +31,13 @@ export class Scene {
     this.map.draw(ctx);
 
     for (const entity of entities.values()) {
-      entity.draw(ctx, dt);
+      if (!entity.isUI) entity.draw(ctx, dt);
+    }
+  }
+
+  drawUI(ctx, dt) {
+    for (const entity of entities.values()) {
+      if (entity.isUI) entity.draw(ctx, dt);
     }
   }
 }

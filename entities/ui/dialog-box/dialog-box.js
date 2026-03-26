@@ -11,6 +11,7 @@ import { noop } from '../../../utils/noop.js';
 import { DEFAULT_PORTRAIT_BOUNDS } from './constants.js';
 
 export class DialogBox extends Entity {
+  isUI = true;
   dimensions = new Dimensions(0, 200);
   #closeCooldown = 1;
 
