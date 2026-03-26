@@ -37,7 +37,6 @@ export class StartScene extends Scene {
       new Electra(600, 200),
       new Sword(680, 225),
       new Player(400, 400),
-      UI,
       new AreaInfo(),
       // new DebugInfo(),
     ]);

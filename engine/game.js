@@ -2,9 +2,10 @@ import { setupEngine } from './setup.js';
 import { initializeScreen, ctx } from './draw.js';
 import { calculateDeltaTime, getDeltaTime } from './time.js';
 import { getCurrentScene } from './scene.js';
-import { clearJustPressed, Input, InputManager } from './input.js';
+import { clearJustPressed, InputManager } from './input.js';
 import { Camera } from './camera.js';
 import { Analytics } from './analytics.js';
+import { UI } from '../entities/ui/ui.js';
 
 /**
  * Should be a singleton.
@@ -33,7 +34,9 @@ export class Game {
 
     InputManager.update();
 
-    getCurrentScene().update(getDeltaTime());
+    const dt = getDeltaTime();
+    getCurrentScene().update(dt);
+    UI.update(dt);
 
     Camera.update();
 
@@ -43,9 +46,18 @@ export class Game {
   draw() {
     initializeScreen();
 
+    const dt = getDeltaTime();
+
+    // world — drawn with camera transform
     ctx?.save();
     ctx?.translate(-Camera.x, -Camera.y);
-    getCurrentScene().draw(ctx, getDeltaTime());
+    getCurrentScene().draw(ctx, dt);
     ctx?.restore();
+
+    // UI — always drawn in screen space, always on top
+    UI.draw(ctx);
+
+    // overlays (dialogs, windows) — screen space, above everything
+    getCurrentScene().drawOverlays(ctx, dt);
   }
 }

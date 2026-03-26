@@ -10,6 +10,7 @@ export class UIManager {
   static setCurrentlyFocusedWindow(window) {
     if (!(this.isWindowAlreadyOpen(window))) {
       this.currentlyFocusedWindow = window;
+      window.isUI = true;
       addEntity(window);
     }
   }
