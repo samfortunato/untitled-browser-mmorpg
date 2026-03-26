@@ -1,4 +1,4 @@
-import { areKeysPressed, isKeyPressed } from './input.js';
+import { isKeyPressed } from './input.js';
 import { UIManager } from './ui.js';
 
 import { InventoryWindow } from '../entities/ui/inventory-window.js';
@@ -13,7 +13,7 @@ import { UI } from '../entities/ui/ui.js';
  */
 export class KeyboardShortcutManager {
   static update(dt) {
-    if (areKeysPressed('i', 'I') && !UI.chatWindow.isFocused) {
+    if (isKeyPressed('KeyI') && !UI.chatWindow.isFocused) {
       UIManager.setCurrentlyFocusedWindow(new InventoryWindow());
     }
 

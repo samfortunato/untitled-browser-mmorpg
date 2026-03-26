@@ -5,6 +5,7 @@ import { TILE_SIZE_RAW, TILE_SIZE_RENDERED } from '../constants/draw.js';
 export class GameMap {
   static tilesetName = 'NULL';
   static tiles = [[0]];
+  static size = { w: 784, h: 320 };
 
   /** @param {CanvasRenderingContext2D} ctx */
   static draw(ctx) {

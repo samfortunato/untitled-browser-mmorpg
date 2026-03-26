@@ -1,4 +1,4 @@
-import { getMouseBounds, isMouseClicked } from '../../engine/input.js';
+import { getMouseBounds, isMouseClicked, requestPointerCursor } from '../../engine/input.js';
 
 import { Entity } from '../entity.js';
 
@@ -32,6 +32,7 @@ export class MenuButton extends Entity {
 
     if (isMouseWithinBounds) {
       this.backgroundColor = '#2a2a2a';
+      requestPointerCursor();
     } else {
       this.backgroundColor = '#222';
     }

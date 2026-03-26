@@ -11,11 +11,11 @@ export class Dialog {
   isInteracting = false;
   interactionCooldown = 0;
 
-  constructor(parentEntity, text = '', portrait = null, onClose, portraitBounds = null) {
+  constructor(parentEntity, text = '', portrait = null, onClose = noop, portraitBounds = null) {
     this.parentEntity = parentEntity;
     this.text = text;
     this.portrait = portrait;
-    this.onClose = onClose || noop;
+    this.onClose = onClose ?? noop;
     this.portraitBounds = portraitBounds;
   }
 

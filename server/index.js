@@ -1,6 +1,6 @@
 import { createServer } from 'http';
 import express from 'express';
-import { WebSocketServer } from 'ws';
+import { WebSocketServer, WebSocket } from 'ws';
 import bcrypt from "bcrypt";
 import Database from 'better-sqlite3';
 import jwt from 'jsonwebtoken';
@@ -12,6 +12,7 @@ const db = new Database('./data/main.db');
 const app = express();
 const server = createServer(app);
 const webSocketServer = new WebSocketServer({ server });
+const players = new Map();
 
 db.exec(`
   create table if not exists users (
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(express.static('.'));
 app.use(express.json());
 
 app.post('/register', async (req, res) => {
@@ -69,9 +71,90 @@ app.post('/login', async (req, res) => {
 });
 
 webSocketServer.on('connection', (socket) => {
+  console.log('websocket connected');
+
+  const clientId = crypto.randomUUID();
+  const newPlayer = { id: clientId, x: 0, y: 0, z: 0, direction: 2, state: 0, username: '' };
+  players.set(socket, newPlayer);
+
+  socket.send(JSON.stringify({
+    type: 'players',
+    currentPlayerId: clientId,
+    players: Array.from(players.values()),
+  }));
+
+  webSocketServer.clients.forEach((client) => {
+    if (client !== socket && client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify({
+        type: 'newPlayerJoined',
+        player: newPlayer,
+      }));
+    }
+  });
+
   socket.on('message', (data) => {
-    socket.send(data);
+    console.log('websocket message', data.toString());
+
+    const message = JSON.parse(data.toString());
+
+    if (message.type === 0) { // META — store username
+      const player = players.get(socket);
+      if (player) {
+        player.username = message.data;
+        webSocketServer.clients.forEach((client) => {
+          if (client !== socket && client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify({
+              type: 'playerUsernameUpdate',
+              id: player.id,
+              username: player.username,
+            }));
+          }
+        });
+      }
+    }
+
+    if (message.type === 'playerMove') {
+      const player = players.get(socket);
+
+      player.x = message.x;
+      player.y = message.y;
+      player.z = message.z;
+      player.direction = message.direction;
+      player.state = message.state;
+
+      webSocketServer.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(JSON.stringify({
+            type: 'updatePlayerPosition',
+            player,
+          }));
+        }
+      });
+    }
+
+    if (message.type === 'chatMessage') {
+      webSocketServer.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(data.toString());
+        }
+      });
+    }
+  });
+
+  socket.on('close', () => {
+    const player = players.get(socket);
+
+    players.delete(socket);
+
+    webSocketServer.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(JSON.stringify({
+          type: 'playerIsGone',
+          id: player.id,
+        }));
+      }
+    });
   });
 });
 
-server.listen(3000);
+server.listen(process.env.PORT || 3000);

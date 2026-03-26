@@ -10,6 +10,7 @@ import {
   isRunKeyPressed
 } from '../../../engine/input.js';
 import { setPlayerCollider, setPlayerTransform } from '../../../engine/meta.js';
+import { sendServerData } from '../../../engine/server.js';
 import { GRAVITY } from '../../../engine/physics.js';
 import { getCanPlayerMove } from '../../../engine/player.js';
 
@@ -37,6 +38,7 @@ export class Player extends Entity {
   state = STATES.IDLE;
   direction = DIRECTIONS.DOWN;
   speed = NORMAL_SPEED;
+  stepTimer = 0;
   jumpCount = 0;
   jumpCooldown = 0;
   playerName = new PlayerName(this.transform.x, this.transform.y, localStorage.getItem('username') || 'NULL');
@@ -106,12 +108,29 @@ export class Player extends Entity {
     setPlayerTransform(this.transform);
     setPlayerCollider(this.collider);
 
-    // sfx
-    if (this.state === STATES.WALKING) this.walkingAudioEmitter.loop();
-    else this.walkingAudioEmitter.stop();
+    sendServerData(JSON.stringify({
+      type: 'playerMove',
+      x: this.transform.x,
+      y: this.transform.y,
+      z: this.transform.z,
+      direction: this.direction,
+      state: this.state,
+    }));
 
-    if (this.state === STATES.RUNNING) this.runningAudioEmitter.loop();
-    else this.runningAudioEmitter.stop();
+    // sfx
+    if ((this.state === STATES.WALKING || this.state === STATES.RUNNING) && this.transform.z === 0) {
+      const interval = this.state === STATES.RUNNING ? 18 : 28;
+      if (this.stepTimer <= 0) {
+        this.walkingAudioEmitter.playStep();
+        this.stepTimer = interval;
+      } else {
+        this.stepTimer--;
+      }
+    } else {
+      this.stepTimer = 0;
+      this.walkingAudioEmitter.stop();
+      this.runningAudioEmitter.stop();
+    }
 
     // player name
     this.playerName.update();

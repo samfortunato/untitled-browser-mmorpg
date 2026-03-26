@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "start": "node ./server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx webpack --config webpack.config.js --mode=production"
   },
@@ -25,6 +26,11 @@
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "posthog-js": "^1.268.9"
+    "posthog-js": "^1.268.9",
+    "ws": "^8.20.0"
+  },
+  "devDependencies": {
+    "webpack": "^5.105.4",
+    "webpack-cli": "^7.0.2"
   }
 }

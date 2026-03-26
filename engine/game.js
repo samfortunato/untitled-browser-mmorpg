@@ -2,7 +2,9 @@ import { setupEngine } from './setup.js';
 import { initializeScreen, ctx } from './draw.js';
 import { calculateDeltaTime, getDeltaTime } from './time.js';
 import { getCurrentScene } from './scene.js';
-import { InputManager } from './input.js';
+import { clearJustPressed, Input, InputManager } from './input.js';
+import { Camera } from './camera.js';
+import { Analytics } from './analytics.js';
 
 /**
  * Should be a singleton.
@@ -22,6 +24,8 @@ export class Game {
     setupEngine();
 
     getCurrentScene().initialize();
+
+    Analytics.init();
   }
 
   update(currentTimeAtStartOfFrame) {
@@ -30,11 +34,20 @@ export class Game {
     InputManager.update();
 
     getCurrentScene().update(getDeltaTime());
+
+    Camera.update();
+
+    clearJustPressed();
   }
 
   draw() {
     initializeScreen();
 
+    ctx?.save();
+    ctx?.translate(-Camera.x, -Camera.y);
+
     getCurrentScene().draw(ctx, getDeltaTime());
+
+    ctx?.restore();
   }
 }

@@ -1,4 +1,4 @@
-import { isKeyPressed } from '../../../engine/input.js';
+import { isKeyPressed, isJustPressed } from '../../../engine/input.js';
 import { canvas } from '../../../engine/draw.js';
 import { setCanPlayerMove } from '../../../engine/player.js';
 
@@ -12,6 +12,7 @@ import { DEFAULT_PORTRAIT_BOUNDS } from './constants.js';
 
 export class DialogBox extends Entity {
   dimensions = new Dimensions(0, 200);
+  #closeCooldown = 1;
 
   textOffset = {
     x: 32,
@@ -32,7 +33,9 @@ export class DialogBox extends Entity {
   }
 
   update() {
-    if (isKeyPressed('x')) {
+    if (this.#closeCooldown > 0) { this.#closeCooldown--; return; }
+
+    if (isKeyPressed('KeyX') || isKeyPressed('Escape') || isJustPressed('Enter')) {
       this.onClose();
       setCanPlayerMove(true);
 

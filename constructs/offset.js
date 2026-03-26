@@ -7,8 +7,6 @@
  * ```javascript
  * offset = new Offset(16, 16);
  *
- * ...
- *
  * draw(this.transform.x - this.offset.x, this.transform.y - this.offset.y, ...);
  * ```
  */

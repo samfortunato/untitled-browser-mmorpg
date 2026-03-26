@@ -24,4 +24,9 @@ export class AudioEmitter {
     this.player.pause();
     this.player.currentTime = 0;
   }
+
+  playStep() {
+    this.player.currentTime = 0;
+    this.player.play();
+  }
 }

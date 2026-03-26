@@ -6,26 +6,24 @@ import { isWithinBoundsOf } from '../utils/collision.js';
 import { KeyboardShortcutManager } from './keyboard-shortcut-manager.js';
 
 export const CONTROLS = {
-  CONFIRM_1: 'Enter',
-  CONFIRM_2: 'x',
-  CONFIRM_3: 'X',
+  CONFIRM: 'Enter',
+  CONFIRM_ALT: 'KeyX',
   CANCEL: 'Escape',
-  MOVE_UP_1: 'ArrowUp',
-  MOVE_RIGHT_1: 'ArrowRight',
-  MOVE_DOWN_1: 'ArrowDown',
-  MOVE_LEFT_1: 'ArrowLeft',
-  MOVE_UP_2: 'w',
-  MOVE_RIGHT_2: 'a',
-  MOVE_DOWN_2: 's',
-  MOVE_LEFT_2: 'd',
-  MOVE_UP_3: 'W',
-  MOVE_RIGHT_3: 'A',
-  MOVE_DOWN_3: 'S',
-  MOVE_LEFT_3: 'D',
-  JUMP: ' ',
-  CROUCH_1: 'Meta',
-  CROUCH_2: 'Control',
-  RUN: 'Shift',
+  MOVE_UP: 'ArrowUp',
+  MOVE_RIGHT: 'ArrowRight',
+  MOVE_DOWN: 'ArrowDown',
+  MOVE_LEFT: 'ArrowLeft',
+  MOVE_UP_ALT: 'KeyW',
+  MOVE_RIGHT_ALT: 'KeyD',
+  MOVE_DOWN_ALT: 'KeyS',
+  MOVE_LEFT_ALT: 'KeyA',
+  JUMP: 'Space',
+  CROUCH_1: 'MetaLeft',
+  CROUCH_2: 'MetaRight',
+  CROUCH_3: 'ControlLeft',
+  CROUCH_4: 'ControlRight',
+  RUN_1: 'ShiftLeft',
+  RUN_2: 'ShiftRight',
   ATTACK: 'Enter',
 }
 
@@ -33,6 +31,7 @@ const mouseCollider = new Collider(0, 0, 0, 0);
 
 const input = {
   pressedKeys: {},
+  justPressed: new Set(),
   mousePos: { x: 0, y: 0 },
   mouseDelta: { x: 0, y: 0 },
   isMouseClicked: false,
@@ -41,8 +40,16 @@ const input = {
   hasInteracted: false,
 };
 
+let _wantsPointer = false;
+
+export function requestPointerCursor() {
+  _wantsPointer = true;
+}
+
 export class InputManager {
   static update() {
+    document.body.style.cursor = _wantsPointer ? 'pointer' : 'default';
+    _wantsPointer = false;
     KeyboardShortcutManager.update();
   }
 }
@@ -70,20 +77,28 @@ export function setupInput() {
     if (!input.hasInteracted) input.hasInteracted = true;
 
     if (
-      evt.key === 'ArrowUp' ||
-      evt.key === 'ArrowRight' ||
-      evt.key === 'ArrowDown' ||
-      evt.key === 'ArrowLeft' ||
-      evt.key === 'Meta' ||
-      evt.key === 'Control'
+      evt.code === 'ArrowUp' ||
+      evt.code === 'ArrowRight' ||
+      evt.code === 'ArrowDown' ||
+      evt.code === 'ArrowLeft' ||
+      evt.code === 'MetaLeft' ||
+      evt.code === 'MetaRight' ||
+      evt.code === 'ControlLeft' ||
+      evt.code === 'ControlRight'
     ) {
       evt.preventDefault();
     }
 
-    input.pressedKeys[evt.key] = true;
+    if (!input.pressedKeys[evt.code]) {
+      input.justPressed.add(evt.code);
+    }
+
+    input.pressedKeys[evt.code] = true;
   });
 
-  document.addEventListener('keyup', ({ key }) => input.pressedKeys[key] = false);
+  document.addEventListener('keyup', (evt) => {
+    input.pressedKeys[evt.code] = false;
+  });
 
   canvas.addEventListener('wheel', (evt) => {
     evt.preventDefault();
@@ -98,19 +113,26 @@ export function setupInput() {
   });
 }
 
-export function isKeyPressed(key) {
-  return input.pressedKeys[key] === true;
+export function clearJustPressed() {
+  input.justPressed.clear();
 }
 
-export function areKeysPressed(...keys) {
-  return keys.some(key => input.pressedKeys[key] === true);
+export function isJustPressed(code) {
+  return input.justPressed.has(code);
+}
+
+export function isKeyPressed(code) {
+  return input.pressedKeys[code] === true;
+}
+
+export function areKeysPressed(...codes) {
+  return codes.some(code => input.pressedKeys[code] === true);
 }
 
 export function isConfirmKeyPressed() {
   return (
-    input.pressedKeys[CONTROLS.CONFIRM_1] ||
-    input.pressedKeys[CONTROLS.CONFIRM_2] ||
-    input.pressedKeys[CONTROLS.CONFIRM_3]
+    input.pressedKeys[CONTROLS.CONFIRM] ||
+    input.pressedKeys[CONTROLS.CONFIRM_ALT]
   );
 }
 
@@ -121,29 +143,30 @@ export function isCancelKeyPressed() {
 export function isCrouchKeyPressed() {
   return (
     input.pressedKeys[CONTROLS.CROUCH_1] ||
-    input.pressedKeys[CONTROLS.CROUCH_2]
+    input.pressedKeys[CONTROLS.CROUCH_2] ||
+    input.pressedKeys[CONTROLS.CROUCH_3] ||
+    input.pressedKeys[CONTROLS.CROUCH_4]
   );
 }
 
 export function isAMovementKeyPressed() {
   return (
-    input.pressedKeys[CONTROLS.MOVE_UP_1] ||
-    input.pressedKeys[CONTROLS.MOVE_RIGHT_1] ||
-    input.pressedKeys[CONTROLS.MOVE_DOWN_1] ||
-    input.pressedKeys[CONTROLS.MOVE_LEFT_1] ||
-    input.pressedKeys[CONTROLS.MOVE_UP_2] ||
-    input.pressedKeys[CONTROLS.MOVE_RIGHT_2] ||
-    input.pressedKeys[CONTROLS.MOVE_DOWN_2] ||
-    input.pressedKeys[CONTROLS.MOVE_LEFT_2] ||
-    input.pressedKeys[CONTROLS.MOVE_UP_3] ||
-    input.pressedKeys[CONTROLS.MOVE_RIGHT_3] ||
-    input.pressedKeys[CONTROLS.MOVE_DOWN_3] ||
-    input.pressedKeys[CONTROLS.MOVE_LEFT_3]
+    input.pressedKeys[CONTROLS.MOVE_UP] ||
+    input.pressedKeys[CONTROLS.MOVE_RIGHT] ||
+    input.pressedKeys[CONTROLS.MOVE_DOWN] ||
+    input.pressedKeys[CONTROLS.MOVE_LEFT] ||
+    input.pressedKeys[CONTROLS.MOVE_UP_ALT] ||
+    input.pressedKeys[CONTROLS.MOVE_RIGHT_ALT] ||
+    input.pressedKeys[CONTROLS.MOVE_DOWN_ALT] ||
+    input.pressedKeys[CONTROLS.MOVE_LEFT_ALT]
   );
 }
 
 export function isRunKeyPressed() {
-  return input.pressedKeys[CONTROLS.RUN];
+  return (
+    input.pressedKeys[CONTROLS.RUN_1] ||
+    input.pressedKeys[CONTROLS.RUN_2]
+  );
 }
 
 export function isJumpKeyPressed() {
@@ -152,33 +175,29 @@ export function isJumpKeyPressed() {
 
 export function isMovementUpKeyPressed() {
   return (
-    input.pressedKeys[CONTROLS.MOVE_UP_1] ||
-    input.pressedKeys[CONTROLS.MOVE_UP_2] ||
-    input.pressedKeys[CONTROLS.MOVE_UP_3]
+    input.pressedKeys[CONTROLS.MOVE_UP] ||
+    input.pressedKeys[CONTROLS.MOVE_UP_ALT]
   );
 }
 
 export function isMovementRightKeyPressed() {
   return (
-    input.pressedKeys[CONTROLS.MOVE_RIGHT_1] ||
-    input.pressedKeys[CONTROLS.MOVE_RIGHT_2] ||
-    input.pressedKeys[CONTROLS.MOVE_RIGHT_3]
+    input.pressedKeys[CONTROLS.MOVE_RIGHT] ||
+    input.pressedKeys[CONTROLS.MOVE_RIGHT_ALT]
   );
 }
 
 export function isMovementDownKeyPressed() {
   return (
-    input.pressedKeys[CONTROLS.MOVE_DOWN_1] ||
-    input.pressedKeys[CONTROLS.MOVE_DOWN_2] ||
-    input.pressedKeys[CONTROLS.MOVE_DOWN_3]
+    input.pressedKeys[CONTROLS.MOVE_DOWN] ||
+    input.pressedKeys[CONTROLS.MOVE_DOWN_ALT]
   );
 }
 
 export function isMovementLeftKeyPressed() {
   return (
-    input.pressedKeys[CONTROLS.MOVE_LEFT_1] ||
-    input.pressedKeys[CONTROLS.MOVE_LEFT_2] ||
-    input.pressedKeys[CONTROLS.MOVE_LEFT_3]
+    input.pressedKeys[CONTROLS.MOVE_LEFT] ||
+    input.pressedKeys[CONTROLS.MOVE_LEFT_ALT]
   );
 }
 
@@ -232,4 +251,8 @@ export function getWheelDelta() {
 
 export function getHasInteracted() {
   return input.hasInteracted;
+}
+
+export class Input {
+  state = {};
 }

@@ -10,10 +10,10 @@
 		<h1>Login</h1>
 
 		<form>
-			<label for="username"></label>
+			<label for="username">Username</label>
 			<input type="text" name="username" id="username">
 
-			<label for="password"></label>
+			<label for="password">Password</label>
 			<input type="password" name="password" id="password">
 
 			<input type="submit" value="Login">
@@ -31,7 +31,7 @@
 
 				const credentials = new FormData(evt.target);
 
-				const res = await fetch('http://localhost:3000/login', {
+				const res = await fetch('/login', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({

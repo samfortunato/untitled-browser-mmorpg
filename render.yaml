@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: untitled-browser-mmorpg
+    runtime: docker
+    region: oregon
+    # Free plan available — upgrade to 'starter' ($7/mo) to enable the disk below
+    plan: starter
+    envVars:
+      - key: AUTH_SECRET
+        generateValue: true
+    disk:
+      name: game-data
+      mountPath: /app/data
+      sizeGB: 1

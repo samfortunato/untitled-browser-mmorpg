@@ -1,5 +1,3 @@
-import { _0x343a } from './lock.js';
-
 import { Game } from './engine/game.js';
 
 if (!localStorage.getItem('session_token')) {
