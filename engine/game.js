@@ -50,7 +50,7 @@ export class Game {
 
     // world — drawn with camera transform
     ctx?.save();
-    ctx?.translate(-Camera.x, -Camera.y);
+    ctx?.translate(-Camera.transform.x, -Camera.transform.y);
     getCurrentScene().draw(ctx, dt);
     ctx?.restore();
 
