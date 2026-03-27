@@ -2,6 +2,9 @@ services:
   - type: web
     name: untitled-browser-mmorpg
     runtime: docker
+    repo: https://github.com/samfortunato/untitled-browser-mmorpg
+    branch: master
+    autoDeploy: true
     region: oregon
     # Free plan available — upgrade to 'starter' ($7/mo) to enable the disk below
     plan: starter
