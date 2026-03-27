@@ -27,8 +27,8 @@ export class Scene {
     }
   }
 
-  draw(ctx, dt) {
-    this.map.draw(ctx);
+  draw(ctx, dt, camX = 0, camY = 0) {
+    this.map.draw(ctx, camX, camY);
 
     for (const entity of entities.values()) {
       if (!entity.isUI) entity.draw(ctx, dt);

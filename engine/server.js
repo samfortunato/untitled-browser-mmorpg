@@ -3,27 +3,27 @@ import { MESSAGE_TYPES } from '../server/constants.js';
 import { addLatestChat } from './chat.js';
 import { spawnOtherPlayer, updateOtherPlayer, updateOtherPlayerUsername, removeOtherPlayer } from './other-players.js';
 
-const WEB_SOCKET_URL = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}`;
+const CHANNEL_URL = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}`;
 
 /** @type {WebSocket} */
-let ws;
+let channel;
 let currentPlayerId = null;
 
 export function setupServerConnection() {
-  ws = new WebSocket(WEB_SOCKET_URL);
+  channel = new WebSocket(CHANNEL_URL);
 
-  ws.addEventListener('open', onOpen);
-  ws.addEventListener('message', onMessage);
+  channel.addEventListener('open', onOpen);
+  channel.addEventListener('message', onMessage);
 }
 
 export function sendServerData(data) {
-  if (ws.readyState === WebSocket.OPEN) {
-    ws.send(data);
+  if (channel.readyState === WebSocket.OPEN) {
+    channel.send(data);
   }
 }
 
 function onOpen() {
-  ws.send(JSON.stringify({
+  channel.send(JSON.stringify({
     type: MESSAGE_TYPES.META,
     data: localStorage.getItem('username'),
   }));

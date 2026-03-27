@@ -37,14 +37,21 @@
   - if it's a big deal, or you're not finished, make it on another branch
 
 - lifecycle methods should be verbs
-  - initialize
+  - initialize (maybe just init)
+  - sync (sync with remote server — source of truth)
+  - listen (handle events from event queue?)
   - update
   - draw
   - destroy
   - close
-  - listen
 
 - simple geometric very common constants should be one letter, or very short?
   - e.g.:
     - x, y, z
     - w, l, h
+
+- keep it simple?
+
+- understanding the core concepts of things is important.
+  e.g. a WebSocket is an implementation of a core concept. the core concept is a "channel", or "socket", or bi-directional communication.
+       things in the engine should reflect this?

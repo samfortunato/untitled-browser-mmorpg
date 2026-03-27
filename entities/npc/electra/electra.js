@@ -10,7 +10,7 @@ const PORTRAIT_BOUNDS = { dx: document.documentElement.clientWidth - 420, dy: do
 
 export class Electra extends Entity {
   collider = new Collider(0, 32, 32, 32);
-  dialog = new Dialog(this, 'Hey! I\'m hot! Love u!!! <3', PORTRAITS.ELECTRA, null, PORTRAIT_BOUNDS);
+  dialog = new Dialog(this, 'Hi! Love u!!! <3', PORTRAITS.ELECTRA, null, PORTRAIT_BOUNDS);
   sprite = new ElectraSprite(this);
 
   update() {

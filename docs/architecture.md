@@ -4,6 +4,18 @@ notes on how the game/game engine is constructed, etc.?
 
 ## notes
 
+### engine
+
+you have:
+
+- a game
+	- wiring
+		- game core
+		- modules
+	- state
+	- scenes
+		- entities
+
 ### lifecycle
 
 everything generally gets called the same way
@@ -48,3 +60,14 @@ options:
 there is a lot of:
 - low level drawing code
 - low level "positioning" code
+
+### practices
+
+#### proxies
+
+wrap third party APIs in a proxy
+
+- only make available what you need
+- test proxies
+	- if third party API fails, tests will catch it
+	- only test what parts of the API you use

@@ -51,7 +51,7 @@ export class Game {
     // world — drawn with camera transform
     ctx?.save();
     ctx?.translate(-Camera.transform.x, -Camera.transform.y);
-    getCurrentScene().draw(ctx, dt);
+    getCurrentScene().draw(ctx, dt, Camera.transform.x, Camera.transform.y);
     ctx?.restore();
 
     // UI — always drawn in screen space, always on top
