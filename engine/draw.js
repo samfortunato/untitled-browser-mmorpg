@@ -1,55 +1,36 @@
+import { VIEWPORT_W, VIEWPORT_H } from '../constants/draw.js';
+
 export const canvas = document.createElement('canvas');
 
-canvas.width = document.documentElement.clientWidth;
-canvas.height = document.documentElement.clientHeight;
+canvas.width = VIEWPORT_W * devicePixelRatio;
+canvas.height = VIEWPORT_H * devicePixelRatio;
+canvas.style.width = `${VIEWPORT_W}px`;
+canvas.style.height = `${VIEWPORT_H}px`;
 
 document.body.append(canvas);
 
 export const ctx = canvas.getContext('2d');
 
-calculateCanvasSize();
-
-window.addEventListener('resize', () => {
-  canvas.width = document.documentElement.clientWidth;
-  canvas.height = document.documentElement.clientHeight;
-
-  calculateCanvasSize();
-});
-
-function calculateCanvasSize() {
-  // TODO: change to `canvasBounds` or something?
-  const canvasBoundingClientRect = canvas.getBoundingClientRect();
-
-  // TODO: change `devicePixelRatio` to `window.devicePixelRatio` to clarify that it is something on the window
-  canvas.width = canvasBoundingClientRect.width * devicePixelRatio;
-  canvas.height = canvasBoundingClientRect.height * devicePixelRatio;
-
-  ctx?.scale(devicePixelRatio, devicePixelRatio);
-  canvas.style.width = `${canvasBoundingClientRect.width}px`;
-  canvas.style.height = `${canvasBoundingClientRect.height}px`;
-}
+ctx?.scale(devicePixelRatio, devicePixelRatio);
 
 export function initializeScreen() {
   ctx.imageSmoothingEnabled = false;
-  ctx?.clearRect(0, 0, canvas.width, canvas.height);
+  ctx?.clearRect(0, 0, VIEWPORT_W, VIEWPORT_H);
 
   ctx.fillStyle = 'grey';
-  ctx?.fillRect(0, 0, canvas.width, canvas.height);
+  ctx?.fillRect(0, 0, VIEWPORT_W, VIEWPORT_H);
 
   ctx.textBaseline = 'top';
 }
 
 export function getScreenWidth() {
-  return document.documentElement.clientWidth;
+  return VIEWPORT_W;
 }
 
 export function getScreenHeight() {
-  return document.documentElement.clientHeight;
+  return VIEWPORT_H;
 }
 
 export function getScreenDimensions() {
-  return {
-    w: document.documentElement.clientWidth,
-    h: document.documentElement.clientHeight,
-  };
+  return { w: VIEWPORT_W, h: VIEWPORT_H };
 }
