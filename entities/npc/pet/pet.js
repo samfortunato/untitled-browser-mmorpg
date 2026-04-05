@@ -5,7 +5,7 @@ const AGES = {
   CHILD: 1,
   ADOLESCENT: 2,
   ADULT: 3,
-  ELDER: 4.
+  ELDER: 4,
 };
 
 const AGES_TO_COLORS = {
